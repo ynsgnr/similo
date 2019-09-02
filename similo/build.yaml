@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      similo_annotations|similo:
+        enabled: true
+
+builders:
+  similo:
+    target: ":similo"
+    import: "package:similo/builder.dart"
+    builder_factories: ["similoFactory"]
+    build_extensions: {".dart": [".similo.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
