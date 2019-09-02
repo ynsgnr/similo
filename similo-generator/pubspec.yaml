@@ -1,0 +1,13 @@
+name: similo
+description: Dart Builder for const constructors and copyWith
+version: 1.0.0
+author: Yunus Gungor <yunusgnr@gmail.com>
+homepage: https://github.com/ynsngr/similo
+
+environment:  
+  sdk: ">=2.0.0 <3.0.0"
+  
+dependencies:
+
+dev_dependencies:  
+  test: 1.3.4
