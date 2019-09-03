@@ -8,19 +8,23 @@ import 'package:source_gen/source_gen.dart';
 
 import 'package:similo_annotations/annotations.dart';
 
-class ConstGenerator extends GeneratorForAnnotation<Const> {
+class ConstGenerator extends GeneratorForAnnotation<SimiloBase> {
   @override
   String generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
-    print(e.name);
+
+    print("Const");
+    int type = annotation.peek(SimiloEnums.TYPE).intValue;
+    print(type);
+    type = type & SimiloEnums.CONST;
+    print(type);
+    if(type!=SimiloEnums.CONST){return "";}
 
     final element = e as ClassElement;
 
     final elementInstanceFields = VariableParser.getVariablesFrom(element);
     print(elementInstanceFields);
     VariableParser.getInheritedVariablesFrom(element);
-
-    print("------");
 
     return """
     
