@@ -5,4 +5,4 @@ import 'package:source_gen/source_gen.dart';
 import 'package:similo/src/const_generator.dart';
 
 Builder similoFactory(BuilderOptions options) =>
-    SharedPartBuilder([ClassDefiner(),ConstGenerator(),CopyWithGenerator(),ClassEncloser()], 'similo');
+    SharedPartBuilder([ClassDefiner()], 'similo');

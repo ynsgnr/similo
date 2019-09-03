@@ -6,7 +6,7 @@ class VariableParser {
   //Get variables only inside the class
   static List<List<String>> getVariablesFrom(ClassElement element){
     //TODO find a way to get variable type as string
-    return element.fields.where((e) => !e.isStatic).map((e) =>[e.name, e.kind.runtimeType.toString()]).toList();
+    return element.fields.where((e) => !e.isStatic).map((e) =>[e.name, e.type.toString()]).toList();
   }
   
   //Get ingerited variables
@@ -14,17 +14,15 @@ class VariableParser {
     final List<List<String>> list = List<List<String>>();
     InheritanceManager(element.library).getMembersInheritedFromClasses(element)
     ..values.forEach((e){
-      if(e.kind == ElementKind.GETTER){
-        print(e.name);
-        print(e.type);
-        print(e.displayName);
-        print(e.kind);
-        print(e.returnType);
-        print(" ");
+      if(e.kind == ElementKind.GETTER && e.name!="hashCode" && e.returnType!="runtimeType"){
+        list.add([e.name.toString(),e.returnType.toString()]);
       }
     });
-    print(list);
-    return null; 
+    return list; 
+  }
+
+  static List<List<String>> getAllVariablesFrom(ClassElement element){
+    return getVariablesFrom(element) + getInheritedVariablesFrom(element);
   }
 
 }

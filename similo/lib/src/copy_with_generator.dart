@@ -11,13 +11,8 @@ class CopyWithGenerator extends GeneratorForAnnotation<SimiloBase> {
   String generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
     
-    print("CopyWith");
-    int type = annotation.peek(SimiloEnums.TYPE).intValue;
-    print(type);
-    type = type & SimiloEnums.COPYWITH;
-    print(type);
+    final int type = annotation.peek(SimiloEnums.TYPE).intValue & SimiloEnums.COPYWITH;
     if(type!=SimiloEnums.COPYWITH){return "";}
-
 
     return """
     
