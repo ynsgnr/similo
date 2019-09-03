@@ -1,5 +1,0 @@
-
-class Const {
-
-  const Const();
-}
