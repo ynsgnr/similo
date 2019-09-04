@@ -22,9 +22,10 @@ class ElementParser {
     return inheritedCost;
   }
 
-  static String getExtendedClass(Element element){
+  static String getExtendedClass(Element element, ConstantReader annotation){
+    if (annotation.peek(SimiloEnums.EXTEND) != null) return annotation.peek(SimiloEnums.EXTEND).stringValue;
     final extendedClass = element.toString().split(" extends ");
     if(extendedClass.length==1)return "";
-    return extendedClass[1];
+    return extendedClass[1].split(" ")[0];
   }
 }

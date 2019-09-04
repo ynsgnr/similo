@@ -24,7 +24,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           todo: 'Make `$name` an abstract class.', element: e);
     }
 
-    var extendedClass = ElementParser.getExtendedClass(e);
+    var extendedClass = ElementParser.getExtendedClass(e, annotation);
     if (extendedClass != "") extendedClass = "extends " + extendedClass;
 
     final String className = ElementParser.parseNameFrom(e, annotation);
