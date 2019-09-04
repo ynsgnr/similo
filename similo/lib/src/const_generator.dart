@@ -10,31 +10,53 @@ class ConstGenerator extends GeneratorForAnnotation<SimiloBase> {
   @override
   String generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
-
-    final int type = annotation.peek(SimiloEnums.TYPE).intValue & SimiloEnums.CONST;
-    if(type!=SimiloEnums.CONST){return "";}
-
-    final className = ElementParser.parseNameFrom(e, annotation);
-    final elementInstanceFields = VariableParser.getAllVariablesFrom(e);
-    final constSuper = ElementParser.getConstSuperFrom(e);
-    final elements = elementInstanceFields.map((element)=>element[1]);
-    if(elements.isEmpty){
-      return "const $className();";
+    final int type =
+        annotation.peek(SimiloEnums.TYPE).intValue & SimiloEnums.CONST;
+    if (type != SimiloEnums.CONST) {
+      return "";
     }
-    final elementsFinal = elements.map((element)=>"final $element;").join("\n");
-    final elementsComma = elements.map((element)=>"this.$element,").join("\n");
+    if (!ElementParser.checkIfInheritedCost(e)) {
+      final name = e.name;
+      throw InvalidGenerationSourceError(
+          'Generator cannot target `$name` which Inherited non const class.',
+          todo:
+              'Add const constructor or @Cost() to inherited classes of $name.',
+          element: e);
+    }
+    
+    final className = ElementParser.parseNameFrom(e, annotation);
 
-    //TODO check if values initilized in base class and if initilized use :
-    //TODO check if super has const constructor
-    //TODO deal with hidden variabls
+    final elements =
+        VariableParser.getVariablesFrom(e).map((element) => element[1]);
+    final elementsInherited = VariableParser.getInheritedVariablesFrom(e)
+        .map((element) => element[1]);
+    final elementsSuper =
+        elementsInherited.map((element) => "$element:$element,").join("\n");
 
-    //Overrites already set values
+    if (elements.isEmpty && elementsInherited.isEmpty) {
+      return "const $className();";
+    } else if (elements.isEmpty) {
+      return """const $className():
+        super(
+            $elementsSuper
+        );""";
+    }
 
+    final elementsFinal =
+        elements.map((element) => "final $element;").join("\n");
+    final elementsComma =
+        elements.map((element) => "this.$element,").join("\n");
+    final elementsSuperComma = 
+        elementsInherited.map((element)=>"$element,").join("\n");
+        
+    //TODO deal with hidden variables
     return """
       $elementsFinal
       const $className({
-        $elementsComma});
+        $elementsComma$elementsSuperComma}):
+          super(
+            $elementsSuper
+          );
     """;
-
   }
 }
