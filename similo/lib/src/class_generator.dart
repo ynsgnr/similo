@@ -34,7 +34,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
                 .generateForAnnotatedElement(e, annotation, buildStep);
     return """
     class $className $extendedClass implements ${e.name}{
-      $classContents
+    $classContents
       noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
     }
     """;

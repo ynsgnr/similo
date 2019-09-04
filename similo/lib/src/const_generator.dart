@@ -31,7 +31,12 @@ class ConstGenerator extends GeneratorForAnnotation<SimiloBase> {
     final elementsInherited = VariableParser.getInheritedVariablesFrom(e)
         .map((element) => element[1]);
     final elementsSuper =
-        elementsInherited.map((element) => "$element:$element,").join("\n");
+        elementsInherited.map((element){
+          //Remove underscore from inherited values
+          //we assume it is set on the constructor
+          final name = element[0]=="_" ? element.substring(1) : element;
+          return "${name}:${name},";
+          }).join("\n");
 
     if (elements.isEmpty && elementsInherited.isEmpty) {
       return "const $className();";
@@ -42,21 +47,41 @@ class ConstGenerator extends GeneratorForAnnotation<SimiloBase> {
         );""";
     }
 
+    List<String> hiddenVariables = List<String>();
     final elementsFinal =
         elements.map((element) => "final $element;").join("\n");
     final elementsComma =
-        elements.map((element) => "this.$element,").join("\n");
+        elements.map((element){
+          if (element[0]=="_"){
+            hiddenVariables.add("this.$element = ${element.substring(1)},");
+            return "${element.substring(1)},";
+          }
+          return "this.$element,";
+        }).join("\n");
+    String hidden;
+    if(elementsSuper.isEmpty && hiddenVariables.isEmpty){
+      hidden="";
+    }
+    else if(elementsSuper.isEmpty){
+      hidden = hiddenVariables.join("\n");
+      hidden = hidden.substring(0,hidden.length-1)+";";//Remove comma at the end
+    }else{
+      hidden = hiddenVariables.join("\n");
+    }
     final elementsSuperComma = 
         elementsInherited.map((element)=>"$element,").join("\n");
-        
-    //TODO deal with hidden variables
+    final elementsSuperWrapped = elementsSuper.isEmpty ? "" : "super($elementsSuper);";
+    final doubleDot = elementsSuper.isEmpty && hiddenVariables.isEmpty ? ";" : ":";
+
+    //TODO deal with get set of hidden variables
+    
     return """
       $elementsFinal
       const $className({
-        $elementsComma$elementsSuperComma}):
-          super(
-            $elementsSuper
-          );
+        $elementsComma
+        $elementsSuperComma
+      })$doubleDot
+          $hidden$elementsSuperWrapped
     """;
   }
 }
