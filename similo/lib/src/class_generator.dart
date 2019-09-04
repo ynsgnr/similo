@@ -17,6 +17,15 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           todo: 'Remove the Const annotation from `$name`.',
           element: e);
     }
+
+    final element = e as ClassElement;
+    if ( !element.isAbstract ){
+      final name = e.name;
+      throw InvalidGenerationSourceError('Generator cannot target `$name`.',
+          todo: 'Make `$name` an abstract class.',
+          element: e);
+    }
+
     final String className = ElementParser.parseNameFrom(e, annotation);
     final String classContents = ConstGenerator().generateForAnnotatedElement(e, annotation, buildStep) + CopyWithGenerator().generateForAnnotatedElement(e, annotation, buildStep);
     return """

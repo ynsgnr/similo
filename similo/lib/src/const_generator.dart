@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:mirrors';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build/src/builder/build_step.dart';
@@ -16,17 +14,26 @@ class ConstGenerator extends GeneratorForAnnotation<SimiloBase> {
     final int type = annotation.peek(SimiloEnums.TYPE).intValue & SimiloEnums.CONST;
     if(type!=SimiloEnums.CONST){return "";}
 
-    final element = e as ClassElement;
-    final String className = ElementParser.parseNameFrom(e, annotation);
-    final elementInstanceFields = VariableParser.getAllVariablesFrom(element);
-    print(className + " fields: ");
-    print(elementInstanceFields);
+    final className = ElementParser.parseNameFrom(e, annotation);
+    final elementInstanceFields = VariableParser.getAllVariablesFrom(e);
+    final constSuper = ElementParser.getConstSuperFrom(e);
+    final elements = elementInstanceFields.map((element)=>element[1]);
+    if(elements.isEmpty){
+      return "const $className();";
+    }
+    final elementsFinal = elements.map((element)=>"final $element;").join("\n");
+    final elementsComma = elements.map((element)=>"this.$element,").join("\n");
+
+    //TODO check if values initilized in base class and if initilized use :
+    //TODO check if super has const constructor
+    //TODO deal with hidden variabls
+
+    //Overrites already set values
 
     return """
-    
-      final String test;
-      const _\$FirstCompileTest({String test,}):this.test=test;
-    
+      $elementsFinal
+      const $className({
+        $elementsComma});
     """;
 
   }
