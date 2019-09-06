@@ -1,21 +1,21 @@
-library similo_annotations;
+library similoannotations;
 
-class _SimiloBase {
-  const _SimiloBase();
+class SimiloBase {
+  const SimiloBase();
 }
 
-class _Const extends _SimiloBase {
-  const _Const();
+class ConstAnnotation extends SimiloBase {
+  const ConstAnnotation();
 }
 
-class _CopyWith extends _SimiloBase {
-  const _CopyWith();
+class CopyWithAnnotation extends SimiloBase {
+  const CopyWithAnnotation();
 }
 
-class _Scale extends _SimiloBase{
-  const _Scale();
+class ScaleAnnotation extends SimiloBase{
+  const ScaleAnnotation();
 }
 
-const Const = _Const();
-const CopyWith = _CopyWith();
-const Scale = _Scale();
+const Const = ConstAnnotation();
+const CopyWith = CopyWithAnnotation();
+const Scale = ScaleAnnotation();
