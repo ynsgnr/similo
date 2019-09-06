@@ -5,11 +5,21 @@
 const TestClass t = const TestClass(TestClassValues(test: "test"));
 
 //Class we write by hand
-@Const()
+@Const
 abstract class TestClass {
   final String test;
   
   const factory TestClass(TestClassValues b) = _$TestClass;
+
+  //Any additional functions must be added here
+  //This ensures generated code doesnt add random functions
+  //And control is on the hands of progrommer
+  //This also means we can use 
+  @CopyWith
+  TestClass copyWith(TestClassValues);
+
+  @Scale
+  TestClass scale(ScreenUtil);
 }
 
 //Generated code:
