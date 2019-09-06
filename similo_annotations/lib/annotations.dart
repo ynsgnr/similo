@@ -1,35 +1,21 @@
 library similo_annotations;
 
-class SimiloEnums {
-  static const CLASSNAME = "className";
-  static const TYPE = "type";
-  static const EXTEND = "extend";
-  static const CONST = 1; // 001
-  static const COPYWITH = 2; // 010
-  static const STYLE = 4; // 100
+class _SimiloBase {
+  const _SimiloBase();
 }
 
-class SimiloBase {
-  final String className;
-  final String extend;
-  final int type;
-  const SimiloBase({
-    String className,
-    String extend,
-    int type,
-  })  : className = className,
-        extend = extend,
-        type = type;
+class _Const extends _SimiloBase {
+  const _Const();
 }
 
-class CopyWith extends SimiloBase {
-  const CopyWith({String className, String extend}) : super(className: className, extend: extend, type: SimiloEnums.COPYWITH);
+class _CopyWith extends _SimiloBase {
+  const _CopyWith();
 }
 
-class Const extends SimiloBase {
-  const Const({String className, String extend}) : super(className: className, extend: extend, type: SimiloEnums.CONST);
+class _Scale extends _SimiloBase{
+  const _Scale();
 }
 
-class ConstCopyWith extends SimiloBase{
-  const ConstCopyWith({String className, String extend}) : super(className: className, extend: extend, type: SimiloEnums.CONST | SimiloEnums.COPYWITH);
-}
+const Const = _Const();
+const CopyWith = _CopyWith();
+const Scale = _Scale();
