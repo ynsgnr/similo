@@ -18,6 +18,8 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     final name = e.name;
 
     //TODO add CopyWith, Scale
+    //TODO deal with hidden values (dont add a getter (done), change the value as _v.value in functions)
+    //TODO check posiibility of onhering concreate classesfor functions
 
     print(e);
 
@@ -42,25 +44,32 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     }
 
     final allValues = VariableParser.getAllVariablesFrom(element);
-    final allGetters = allValues.map((variable){
+    List<String> getterList = List<String>();
+    allValues.forEach((variable){
         final varName = variable[1];
-        return "get $varName => _values.${varName};";
-    }).toList().join("\n");
+        if(varName[0]!="_"){
+          getterList.add("get $varName => _values.${varName};");
+        }
+    });
+    final allGetters = getterList.join("\n");
     final allDefines = allValues.map((variable){
         final varType = variable[0];
-        final varName = variable[1];
+        final varName = variable[1][0]!="_" ? variable[1] : variable[1].substring(1);
         return "final $varType $varName;";
     }).toList().join("\n");
     final allConst = allValues.map((variable){
-        final varName = variable[1];
+        final varName = variable[1][0]!="_" ? variable[1] : variable[1].substring(1);
         return "this.$varName,";
     }).toList().join("\n");
+
+    final allConstWrapped = allValues.length>0 ? "{$allConst}" : allConst ;
 
     return """
     class _\$$name implements $name{
       final ${name}Values _values;
       
-      const _\$${name}(${name}Values v):this._values=v;
+      const _\$${name}(${name}Values v)
+        :this._values=v;
 
       //Getters
       $allGetters
@@ -72,7 +81,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
       $allDefines
 
       //Write const constructor
-      const ${name}Values({$allConst});
+      const ${name}Values($allConstWrapped);
     }
     """;
   }
