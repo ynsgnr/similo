@@ -7,6 +7,9 @@ import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
+
+  const ClassDefiner();
+
   @override
   String generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
