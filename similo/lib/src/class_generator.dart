@@ -11,18 +11,19 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
   const ClassDefiner();
 
   @override
-  String generateForAnnotatedElement(
-      Element e, ConstantReader annotation, BuildStep buildStep) {
+  Future<String> generateForAnnotatedElement(
+      Element e, ConstantReader annotation, BuildStep buildStep) async {
 
     
     final name = e.name;
 
     //TODO add CopyWith, Scale
     //TODO deal with hidden values (dont add a getter (done), change the value as _v.value in functions)
-    //TODO check posiibility of onhering concreate classesfor functions (?)
-    //TODO element.methods Find the function from the source (we can parse it using toString)
-    //TODO element.constructors take a look if its factory
-    print(e);
+
+    //TODO element.constructors take a look if its correct
+
+    final functions = await ElementParser.getFunctions(e, buildStep);
+    final functionBodies = functions.join("\n");
 
     if (e is! ClassElement) {
       throw InvalidGenerationSourceError('Generator cannot target `$name`.',
@@ -71,6 +72,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
       
       const _\$${name}(${name}Values v)
         :this._values=v;
+      $functionBodies
 
       //Getters
       $allGetters
