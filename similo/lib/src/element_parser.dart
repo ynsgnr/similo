@@ -68,13 +68,14 @@ class ElementParser {
       } else if (content[i] == stopIndicator && startIndex != -1) {
         stackCounter--;
       }
-      if (stackCounter == 0) {
+      if (stackCounter == 0 && startIndex != -1) {
         stopIndex = i;
         i = content.length;
       }
       i++;
     }
-    return content.substring(startIndex, stopIndex - 1);
+    if (startIndex == -1) return '';
+    return content.substring(startIndex + 1, stopIndex);
   }
 
   static bool checkIfInheritedCost(Element element) {
