@@ -1,0 +1,14 @@
+name: example
+version: 1.0.0
+description: >-
+  An example for similo.
+author: Yunus Gungor <yunusgnr@gmail.com>
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+dependencies:
+  similo_annotations:    
+    path: ../similo_annotations/
+dev_dependencies:
+  similo:    
+    path: ../similo/
+  build_runner: ^1.0.0
