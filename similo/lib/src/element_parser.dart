@@ -1,13 +1,11 @@
-import 'package:build/build.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/resolver/inheritance_manager.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ElementParser {
-  static Future<List<String>> getFunctions(
+  static List<String> getFunctions(
     ClassElement element,
-    BuildStep buildStep,
-  ) async {
+  ) {
     if (element.methods.length == 0) return List<String>();
     final name = element.name;
     final error = InvalidGenerationSourceError(
@@ -15,7 +13,7 @@ class ElementParser {
         todo: 'Add a body to missing function',
         element: element);
 
-    var contents = await getClassCode(element, buildStep);
+    var contents = getClassCode(element);
     var functions = element.methods.map((m) => m.toString()).toList();
     var bodies = List<String>();
     functions.forEach((f) {
@@ -24,8 +22,7 @@ class ElementParser {
       if (splitted.length <= 1) {
         throw error;
       }
-      splitted = splitted[1].split("{");
-      if (splitted.length <= 1) {
+      if (splitted[1][0] != "{") {
         throw error;
       }
       var body = getBetween(splitted[1], "{", "}");
@@ -34,9 +31,10 @@ class ElementParser {
     return bodies;
   }
 
-  static Future<String> getClassCode(
-      ClassElement element, BuildStep buildStep) async {
-    var contents = await buildStep.readAsString(buildStep.inputId);
+  static String getClassCode(ClassElement element) {
+    //var contents = await buildStep.readAsString(buildStep.inputId);
+    var contents =
+        element.source.contents.data; //Using this might cause problems
     var splitted = contents.split(element.toString());
     if (splitted.length <= 1) {
       throw InvalidGenerationSourceError(

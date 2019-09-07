@@ -18,7 +18,6 @@ class VariableParser {
     final List<List<String>> list = List<List<String>>();
     InheritanceManager(element.library).getMembersInheritedFromClasses(element)
       ..values.forEach((e) {
-        print(e);
         if (e.kind == ElementKind.GETTER &&
             e.name != "hashCode" &&
             e.name != "runtimeType") {

@@ -344,8 +344,7 @@ class _$TestFunctions implements TestFunctions {
   final TestFunctionsValues _values;
 
   const _$TestFunctions(TestFunctionsValues v) : this._values = v;
-
-  String testFunction(String v){
+  String testFunction(String v) {
     return this._values.value.toString() + v;
   }
 
