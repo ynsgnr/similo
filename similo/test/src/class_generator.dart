@@ -241,18 +241,6 @@ abstract class TestInheritenceChain extends TestInheritence {
       _$TestInheritenceChain;
 }
 
-//TODO implement
-@ShouldGenerate(r'''
-''')
-@Const
-abstract class TestFunctions {
-  String testFunction() {
-    return "String";
-  }
-
-  const factory TestFunctions(TestFunctionsValues b) = _$TestFunctions;
-}
-
 @ShouldGenerate(r'''
 class _$TestHidden implements TestHidden {
   final TestHiddenValues _values;
@@ -327,8 +315,8 @@ class _$TestWithConstructorInheritence
       : this._values = v;
 
   //Getters
-  get thisIsAValue => _values.thisIsAValue;
   get thisIsANewValue => _values.thisIsANewValue;
+  get thisIsAValue => _values.thisIsAValue;
 }
 
 //Values
@@ -348,7 +336,41 @@ class TestWithConstructorInheritenceValues {
 abstract class TestWithConstructorInheritence extends TestWithConstructor {
   final int thisIsANewValue;
 
-  const factory TestWithConstructorInheritence(
-          TestWithConstructorInheritenceValues b) =
-      _$TestWithConstructorInheritence;
+  const factory TestWithConstructorInheritence(TestWithConstructorInheritenceValues b) = _$TestWithConstructorInheritence;
+}
+
+@ShouldGenerate(r'''
+class _$TestFunctions implements TestFunctions {
+  final TestFunctionsValues _values;
+
+  const _$TestFunctions(TestFunctionsValues v) : this._values = v;
+
+  String testFunction(String v){
+    return this._values.value.toString() + v;
+  }
+
+  //Getters
+  get value => _values.value;
+}
+
+//Values
+class TestFunctionsValues {
+  //Define variables with types
+  final int value;
+
+  //Write const constructor
+  const TestFunctionsValues({
+    this.value,
+  });
+}
+''')
+@Const
+abstract class TestFunctions{
+  final int value;
+
+  String testFunction(String v){
+    return value.toString() + v;
+  }
+
+  const factory TestFunctions(TestFunctionsValues b) = _$TestFunctions;
 }

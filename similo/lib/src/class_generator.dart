@@ -19,8 +19,9 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
 
     //TODO add CopyWith, Scale
     //TODO deal with hidden values (dont add a getter (done), change the value as _v.value in functions)
-    //TODO check posiibility of onhering concreate classesfor functions
-
+    //TODO check posiibility of onhering concreate classesfor functions (?)
+    //TODO element.methods Find the function from the source (we can parse it using toString)
+    //TODO element.constructors take a look if its factory
     print(e);
 
     if (e is! ClassElement) {
