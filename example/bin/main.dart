@@ -2,6 +2,7 @@
 import '../lib/src/example.dart';
 
 void main(){
-  const ExampleFunctions t = const ExampleFunctions(ExampleValues(example: "test"));
-  print(t.functionInheritence(" test function"));
+  const Example t = const Example(ExampleValues(example: "test"));
+  print(t.testFunction(" test "));
+  print(t.exampleWithDefault);
 }
