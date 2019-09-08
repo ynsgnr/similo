@@ -16,7 +16,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
 
     //TODO add CopyWith, Scale
     //TODO deal with hidden values (dont add a getter (done), change the value as _v.value in functions)
-
+    //TODO give ability to make classes public with defined names on annotations, otherwise its impossible to use inheritence for a regular class
     //TODO element.constructors take a look if its correct
 
     final functions = ElementParser.getFunctions(e);
@@ -43,7 +43,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           element: e);
     }
 
-    final allValues = VariableParser.getAllVariablesFrom(element);
+    final allValues = VariableParser.getAllVariablesDefaultsFrom(element);
     List<String> getterList = List<String>();
     allValues.forEach((variable) {
       final varName = variable[1];
@@ -65,7 +65,9 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
         .map((variable) {
           final varName =
               variable[1][0] != "_" ? variable[1] : variable[1].substring(1);
-          return "this.$varName,";
+          final defValue = variable[2];
+          if(defValue.isEmpty) return "this.$varName,";;
+          return "this.$varName = $defValue,";
         })
         .toList()
         .join("\n");

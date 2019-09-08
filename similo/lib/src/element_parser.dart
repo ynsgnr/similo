@@ -3,6 +3,35 @@ import 'package:analyzer/src/dart/resolver/inheritance_manager.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ElementParser {
+  static String getFirstLevel(ClassElement element) {
+    var content = getClassCode(element);
+    if (content.indexOf("{") < 0 || content.lastIndexOf("}") < 0)
+      return content;
+    return content.substring(0, content.indexOf("{")) +
+        content.substring(content.lastIndexOf("}"));
+  }
+
+  static String getDefaultValueFor(ClassElement element, String value,
+      {String firstLevelContent}) {
+    var levelContent = firstLevelContent ?? getFirstLevel(element);
+    var splitted = levelContent.split(";");
+    var i = 0;
+    List<String> possible;
+    while (i != -1 && i < splitted.length) {
+      possible = splitted[i].split(value);
+      i++;
+      if (possible.length > 1 &&
+          possible[1].trim().isNotEmpty &&
+          possible[1].trim()[0] == "=") {
+        i = -1;
+      }
+    }
+    if (i != -1) return "";
+    splitted = possible[1].trim().split("=");
+    if (splitted.length <= 1) return "";
+    return splitted[1];
+  }
+
   static List<String> getFunctions(
     ClassElement element,
   ) {

@@ -86,17 +86,17 @@ class _$TestDefault implements TestDefault {
 //Values
 class TestDefaultValues {
   //Define variables with types
-  final String stringValue = "test";
-  final double doubleValue = 3;
-  final int intValue = 4;
-  final bool boolValue = true;
+  final String stringValue;
+  final double doubleValue;
+  final int intValue;
+  final bool boolValue;
 
   //Write const constructor
   const TestDefaultValues({
-    this.stringValue,
-    this.doubleValue,
-    this.intValue,
-    this.boolValue,
+    this.stringValue = "test",
+    this.doubleValue = 3,
+    this.intValue = 4,
+    this.boolValue = true,
   });
 }
 ''')
@@ -345,7 +345,7 @@ class _$TestFunctions implements TestFunctions {
 
   const _$TestFunctions(TestFunctionsValues v) : this._values = v;
   String testFunction(String v) {
-    return this._values.value.toString() + v;
+    return value.toString() + v;
   }
 
   //Getters
