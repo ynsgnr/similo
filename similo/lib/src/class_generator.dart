@@ -14,10 +14,11 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
       Element e, ConstantReader annotation, BuildStep buildStep) {
     final name = e.name;
 
-    //TODO add CopyWith, Scale
-    //TODO deal with hidden values (dont add a getter (done), change the value as _v.value in functions)
+    //TODO add CopyWith
+    //TODO add Scale
     //TODO give ability to make classes public with defined names on annotations, otherwise its impossible to use inheritence for a regular class
     //TODO element.constructors take a look if its correct
+    //TODO add asserts tag for constructor such as @assert("example!=null");
 
     final functions = ElementParser.getFunctions(e);
     final functionBodies = functions.join("\n");
@@ -44,14 +45,15 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     }
 
     final allValues = VariableParser.getAllVariablesDefaultsFrom(element);
-    List<String> getterList = List<String>();
-    allValues.forEach((variable) {
-      final varName = variable[1];
-      if (varName[0] != "_") {
-        getterList.add("get $varName => _values.${varName};");
-      }
-    });
-    final allGetters = getterList.join("\n");
+    final allGetters = allValues
+        .map((variable) {
+          final varName = variable[1];
+          return (varName[0] != "_")
+              ? "get $varName => _values.${varName};"
+              : "get $varName => _values.${varName.substring(1)};";
+        })
+        .toList()
+        .join("\n");
     final allDefines = allValues
         .map((variable) {
           final varType = variable[0];
@@ -66,7 +68,8 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           final varName =
               variable[1][0] != "_" ? variable[1] : variable[1].substring(1);
           final defValue = variable[2];
-          if(defValue.isEmpty) return "this.$varName,";;
+          if (defValue.isEmpty) return "this.$varName,";
+          ;
           return "this.$varName = $defValue,";
         })
         .toList()

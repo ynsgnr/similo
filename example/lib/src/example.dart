@@ -7,11 +7,16 @@ part 'example.g.dart';
 abstract class Example{
   final String example;
   final String exampleWithDefault = "this is a default value";
+  final String _hiddenValue = "hidden";
 
   //You can use concreate functions!
   //They will be copied to new class too!
   String testFunction(String toAdd){
     return example + toAdd;
+  }
+
+  String testHiddenFunction(String toAdd){
+    return _hiddenValue + toAdd;
   }
   
   const factory Example(ExampleValues v) = _$Example;

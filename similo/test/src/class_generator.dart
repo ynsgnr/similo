@@ -248,7 +248,7 @@ class _$TestHidden implements TestHidden {
   const _$TestHidden(TestHiddenValues v) : this._values = v;
 
   //Getters
-
+  get _thisIsHidden => _values.thisIsHidden;
 }
 
 //Values
@@ -270,6 +270,41 @@ abstract class TestHidden {
 }
 
 @ShouldGenerate(r'''
+class _$TestHiddenFunctions implements TestHiddenFunctions {
+  final TestHiddenFunctionsValues _values;
+
+  const _$TestHiddenFunctions(TestHiddenFunctionsValues v) : this._values = v;
+  String testFunction(String toAdd) {
+    return _thisIsHidden + toAdd;
+  }
+
+  //Getters
+  get _thisIsHidden => _values.thisIsHidden;
+}
+
+//Values
+class TestHiddenFunctionsValues {
+  //Define variables with types
+  final String thisIsHidden;
+
+  //Write const constructor
+  const TestHiddenFunctionsValues({
+    this.thisIsHidden,
+  });
+}
+''')
+@Const
+abstract class TestHiddenFunctions {
+  final String _thisIsHidden;
+
+  String testFunction(String toAdd){
+    return _thisIsHidden + toAdd;
+  }
+
+  const factory TestHidden(TestHiddenValues b) = _$TestHidden;
+}
+
+@ShouldGenerate(r'''
 class _$TestHiddenInheritence implements TestHiddenInheritence {
   final TestHiddenInheritenceValues _values;
 
@@ -278,6 +313,7 @@ class _$TestHiddenInheritence implements TestHiddenInheritence {
 
   //Getters
   get thisIsNotHidden => _values.thisIsNotHidden;
+  get _thisIsHidden => _values.thisIsHidden;
 }
 
 //Values
