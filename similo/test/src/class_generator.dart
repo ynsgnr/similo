@@ -409,3 +409,73 @@ abstract class TestFunctions{
 
   const factory TestFunctions(TestFunctionsValues b) = _$TestFunctions;
 }
+
+@ShouldGenerate(r'''
+class _$TestGivenValues implements TestGivenValues {
+  final GivenValues _values;
+
+  const _$TestGivenValues(GivenValues v) : this._values = v;
+  String testFunction(String v) {
+    return value.toString() + v;
+  }
+
+  //Getters
+  get value => _values.value;
+}
+
+//Values
+class GivenValues {
+  //Define variables with types
+  final int value;
+
+  //Write const constructor
+  const GivenValues({
+    this.value,
+  });
+}
+''')
+@ConstNamed(valuesName:"GivenValues")
+abstract class TestGivenValues{
+  final int value;
+
+  String testFunction(String v){
+    return value.toString() + v;
+  }
+
+  const factory TestGivenValues(GivenValues b) = _$TestGivenValues;
+}
+
+@ShouldGenerate(r'''
+class GivenClass implements TestGivenNameValues {
+  final GivenValues _values;
+
+  const GivenClass(GivenValues v) : this._values = v;
+  String testFunction(String v) {
+    return value.toString() + v;
+  }
+
+  //Getters
+  get value => _values.value;
+}
+
+//Values
+class GivenValues {
+  //Define variables with types
+  final int value;
+
+  //Write const constructor
+  const GivenValues({
+    this.value,
+  });
+}
+''')
+@ConstNamed(className: "GivenClass" ,valuesName:"GivenValues")
+abstract class TestGivenNameValues{
+  final int value;
+
+  String testFunction(String v){
+    return value.toString() + v;
+  }
+
+  const factory TestGivenNameValues(GivenValues b) = GivenClass;
+}

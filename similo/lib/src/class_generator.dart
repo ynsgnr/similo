@@ -12,11 +12,15 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
   @override
   String generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
-    final name = e.name;
+    final String name = annotation.peek(ConstNamed.CLASSNAME) != null
+        ? annotation.peek(ConstNamed.CLASSNAME).stringValue
+        : "_\$${e.name}";
+    final String valuesName = annotation.peek(ConstNamed.VALUESNAME) != null
+        ? annotation.peek(ConstNamed.VALUESNAME).stringValue
+        : "${e.name}Values";
 
     //TODO add CopyWith
     //TODO add Scale
-    //TODO give ability to make classes public with defined names on annotations, otherwise its impossible to use inheritence for a regular class
     //TODO element.constructors take a look if its correct
     //TODO add asserts tag for constructor such as @assert("example!=null");
 
@@ -39,8 +43,9 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
 
     if (!ElementParser.checkIfInheritedCost(e)) {
       throw InvalidGenerationSourceError(
-          'Generator cannot target `$name` which Inherited non const class.',
-          todo: 'Add const constructor or @Cost to inherited classes of $name.',
+          'Generator cannot target `${e.name}` which Inherited non const class.',
+          todo:
+              'Add const constructor or @Cost to inherited classes of ${e.name}.',
           element: e);
     }
 
@@ -78,10 +83,10 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     final allConstWrapped = allValues.length > 0 ? "{$allConst}" : allConst;
 
     return """
-    class _\$$name implements $name{
-      final ${name}Values _values;
+    class $name implements ${e.name}{
+      final $valuesName _values;
       
-      const _\$${name}(${name}Values v)
+      const ${name}($valuesName v)
         :this._values=v;
       $functionBodies
 
@@ -90,12 +95,12 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     }
 
     //Values
-    class ${name}Values{
+    class $valuesName{
       //Define variables with types
       $allDefines
 
       //Write const constructor
-      const ${name}Values($allConstWrapped);
+      const $valuesName($allConstWrapped);
     }
     """;
   }
