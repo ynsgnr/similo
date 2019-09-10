@@ -1,8 +1,6 @@
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen_test/annotations.dart';
 
-
-
 @ShouldGenerate(r'''
 class _$Test implements Test {
   final TestValues _values;
@@ -152,6 +150,7 @@ abstract class TestSomeDefault {
 
   const factory TestSomeDefault(TestSomeDefaultValues b) = _$TestSomeDefault;
 }
+
 @ShouldGenerate(r'''
 class GivenClass implements TestGivenNameValues {
   final GivenValues _values;

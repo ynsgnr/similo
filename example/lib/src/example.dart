@@ -18,17 +18,9 @@ abstract class Example{
   String testHiddenFunction(String toAdd){
     return _hiddenValue + toAdd;
   }
+
+  @CopyWith
+  Example copyObject(ExampleValues v);
   
   const factory Example(ExampleValues v) = _$Example;
-}
-
-
-//Another way to add functions and more
-class ExampleFunctions extends _$Example{
-  const ExampleFunctions(ExampleValues v):super(v);
-
-  String functionInheritence(String toAdd){
-    return this.example + toAdd;
-  }
-
 }

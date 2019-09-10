@@ -27,8 +27,10 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     final functionBodies = ElementParser.getFunctions(e).join("\n");
 
     if (e is! ClassElement) {
-      throw InvalidGenerationSourceError('Generator cannot target `$name` since it is not a class.',
-          todo: 'Remove the Const annotation from `$name`.', element: e);
+      throw InvalidGenerationSourceError(
+          'Generator cannot target `$name` since it is not a class.',
+          todo: 'Remove the Const annotation from `$name`.',
+          element: e);
     }
 
     final element = e as ClassElement;

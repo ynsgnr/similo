@@ -35,11 +35,12 @@ class VariableParser {
     return getVariablesFrom(element) + getInheritedVariablesFrom(element);
   }
 
-  static List<List<String>> getAllVariablesDefaultsFrom(ClassElement element){
+  static List<List<String>> getAllVariablesDefaultsFrom(ClassElement element) {
     var list = getAllVariablesFrom(element);
     var fl = ElementParser.getFirstLevel(element);
-    return list.map((e){
-      e.add(ElementParser.getDefaultValueFor(element,e[1],firstLevelContent: fl));
+    return list.map((e) {
+      e.add(ElementParser.getDefaultValueFor(element, e[1],
+          firstLevelContent: fl));
       return e;
     }).toList();
   }

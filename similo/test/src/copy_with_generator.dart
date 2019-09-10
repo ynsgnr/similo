@@ -17,6 +17,23 @@ abstract class TestCopyWith {
   const factory TestCopyWith(TestCopyWithValues v) = _$TestCopyWith;
 }
 
+@ShouldGenerate(r'''TestHidden copyWith(TestHiddenValues v) {
+  return _$TestHidden(TestHiddenValues(
+    thisIsHidden:
+        v.thisIsHidden != null ? v.thisIsHidden : this._values.thisIsHidden,
+  ));
+}
+''')
+@Const
+abstract class TestHidden {
+  final String _thisIsHidden;
+
+  @CopyWith
+  TestHidden copyWith(TestHiddenValues v);
+
+  const factory TestHidden(TestHiddenValues b) = _$TestHidden;
+}
+
 @ShouldGenerate(r'''TestCopyWithNamed differentName(TestCopyWithNamedValues v) {
   return _$TestCopyWithNamed(TestCopyWithNamedValues(
     base: v.base != null ? v.base : this._values.base,
@@ -179,7 +196,8 @@ abstract class TestNoAnnotations {
     return value.toString() + v;
   }
 
-  const factory TestNoAnnotations(TestNoAnnotationsValues b) = _$TestNoAnnotations;
+  const factory TestNoAnnotations(TestNoAnnotationsValues b) =
+      _$TestNoAnnotations;
 }
 
 @ShouldGenerate(r'''
@@ -193,5 +211,6 @@ abstract class TestNoAnnotationNamed {
     return value.toString() + v;
   }
 
-  const factory TestNoAnnotationNamed(TestNoAnnotationNamedValues b) = _$TestNoAnnotationNamed;
+  const factory TestNoAnnotationNamed(TestNoAnnotationNamedValues b) =
+      _$TestNoAnnotationNamed;
 }

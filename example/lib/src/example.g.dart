@@ -18,6 +18,17 @@ class _$Example implements Example {
     return _hiddenValue + toAdd;
   }
 
+  Example copyObject(ExampleValues v) {
+    return _$Example(ExampleValues(
+      example: v.example != null ? v.example : this._values.example,
+      exampleWithDefault: v.exampleWithDefault != "this is a default value"
+          ? v.exampleWithDefault
+          : this._values.exampleWithDefault,
+      hiddenValue:
+          v.hiddenValue != "hidden" ? v.hiddenValue : this._values.hiddenValue,
+    ));
+  }
+
   //Getters
   get example => _values.example;
   get exampleWithDefault => _values.exampleWithDefault;

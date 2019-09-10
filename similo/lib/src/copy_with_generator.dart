@@ -34,25 +34,34 @@ class CopyWithGen extends GeneratorForAnnotation<SimiloBase> {
       element = e;
       classElement = element.enclosingElement as ClassElement;
     }
-    if (element == null || classElement == null)return "";
+    if (element == null || classElement == null) return "";
 
     String valuesName = "${classElement.name}Values";
     String className = "_\$${classElement.name}";
     classElement.metadata.forEach((m) {
       if (m.element.toString().split(" ")[0] == SimiloBase.CONSTNAMEDCLASS) {
-        if(m.constantValue.getField(ConstNamed.VALUESNAME) != null && m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue()!=null){
-          valuesName = m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue();
+        if (m.constantValue.getField(ConstNamed.VALUESNAME) != null &&
+            m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue() !=
+                null) {
+          valuesName =
+              m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue();
         }
-        if(m.constantValue.getField(ConstNamed.CLASSNAME) != null && m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue()!=null){
-          className = m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue();
+        if (m.constantValue.getField(ConstNamed.CLASSNAME) != null &&
+            m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue() !=
+                null) {
+          className =
+              m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue();
         }
       }
     });
     final variables =
         VariableParser.getAllVariablesDefaultsFrom(element.enclosingElement);
     final allSet = variables
-        .map((v) =>
-            "${v[1]}: v.${v[1]}!=${v[2].isEmpty ? "null" : v[2]} ? v.${v[1]} : this._values.${v[1]},")
+        .map((v) {
+          final variableName = v[1][0] != "_" ? v[1] : v[1].substring(1);
+          final variableDefault = v[2].isEmpty ? "null" : v[2];
+          return "$variableName: v.$variableName!=$variableDefault ? v.$variableName : this._values.$variableName,";
+        })
         .toList()
         .join("\n");
 
