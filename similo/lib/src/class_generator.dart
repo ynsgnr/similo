@@ -21,14 +21,13 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
 
     //TODO add CopyWith
     //TODO add Scale
-    //TODO element.constructors take a look if its correct
     //TODO add asserts tag for constructor such as @assert("example!=null");
 
     final functions = ElementParser.getFunctions(e);
     final functionBodies = functions.join("\n");
 
     if (e is! ClassElement) {
-      throw InvalidGenerationSourceError('Generator cannot target `$name`.',
+      throw InvalidGenerationSourceError('Generator cannot target `$name` since it is not a class.',
           todo: 'Remove the Const annotation from `$name`.', element: e);
     }
 
@@ -41,11 +40,11 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           element: e);
     }
 
-    if (!ElementParser.checkIfInheritedCost(e)) {
+    if (!ElementParser.isConst(e)) {
       throw InvalidGenerationSourceError(
-          'Generator cannot target `${e.name}` which Inherited non const class.',
+          'Generator cannot target `${e.name}` since it is not const or it inherited a non const class .',
           todo:
-              'Add const constructor or @Cost to inherited classes of ${e.name}.',
+              'Add const constructor or @Cost to inherited classes of ${e.name} or make ${e.name} a const class.',
           element: e);
     }
 

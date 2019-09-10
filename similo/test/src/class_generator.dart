@@ -198,9 +198,10 @@ class TestNonCost {
 }
 
 @ShouldThrow(
-    'Generator cannot target `TestInheritenceFromNonCost` which Inherited non const class.',
-    todo:
-        'Add const constructor or @Cost to inherited classes of TestInheritenceFromNonCost.')
+  'Generator cannot target `TestInheritenceFromNonCost` since it is not const or it inherited a non const class .',
+  todo:
+      'Add const constructor or @Cost to inherited classes of TestInheritenceFromNonCost or make TestInheritenceFromNonCost a const class.',
+)
 @Const
 abstract class TestInheritenceFromNonCost extends TestNonCost {
   final bool b = true;
@@ -297,7 +298,7 @@ class TestHiddenFunctionsValues {
 abstract class TestHiddenFunctions {
   final String _thisIsHidden;
 
-  String testFunction(String toAdd){
+  String testFunction(String toAdd) {
     return _thisIsHidden + toAdd;
   }
 
@@ -372,7 +373,9 @@ class TestWithConstructorInheritenceValues {
 abstract class TestWithConstructorInheritence extends TestWithConstructor {
   final int thisIsANewValue;
 
-  const factory TestWithConstructorInheritence(TestWithConstructorInheritenceValues b) = _$TestWithConstructorInheritence;
+  const factory TestWithConstructorInheritence(
+          TestWithConstructorInheritenceValues b) =
+      _$TestWithConstructorInheritence;
 }
 
 @ShouldGenerate(r'''
@@ -400,10 +403,10 @@ class TestFunctionsValues {
 }
 ''')
 @Const
-abstract class TestFunctions{
+abstract class TestFunctions {
   final int value;
 
-  String testFunction(String v){
+  String testFunction(String v) {
     return value.toString() + v;
   }
 
@@ -434,11 +437,11 @@ class GivenValues {
   });
 }
 ''')
-@ConstNamed(valuesName:"GivenValues")
-abstract class TestGivenValues{
+@ConstNamed(valuesName: "GivenValues")
+abstract class TestGivenValues {
   final int value;
 
-  String testFunction(String v){
+  String testFunction(String v) {
     return value.toString() + v;
   }
 
@@ -469,11 +472,11 @@ class GivenValues {
   });
 }
 ''')
-@ConstNamed(className: "GivenClass" ,valuesName:"GivenValues")
-abstract class TestGivenNameValues{
+@ConstNamed(className: "GivenClass", valuesName: "GivenValues")
+abstract class TestGivenNameValues {
   final int value;
 
-  String testFunction(String v){
+  String testFunction(String v) {
     return value.toString() + v;
   }
 

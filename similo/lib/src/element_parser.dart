@@ -51,7 +51,7 @@ class ElementParser {
       if (splitted.length <= 1) {
         throw error;
       }
-      if (splitted[1][0] != "{") {
+      if (splitted[1].trim()[0] != "{") {
         throw error;
       }
       var body = getBetween(splitted[1], "{", "}");
@@ -105,7 +105,7 @@ class ElementParser {
     return content.substring(startIndex + 1, stopIndex);
   }
 
-  static bool checkIfInheritedCost(Element element) {
+  static bool isInheritedConst(Element element) {
     final map = InheritanceManager(element.library)
         .getMembersInheritedFromClasses(element);
     bool inheritedCost = true;
@@ -116,4 +116,9 @@ class ElementParser {
     });
     return inheritedCost;
   }
+
+  static bool isConst(ClassElement element){
+    return isInheritedConst(element) && element.unnamedConstructor.isConst;
+  }
+
 }
