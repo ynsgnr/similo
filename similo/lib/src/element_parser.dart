@@ -44,12 +44,7 @@ class ElementParser {
     var functions = element.methods;
     var bodies = List<String>();
     functions.forEach((function) {
-      //Parse the function body
-      print(function);
-      print(function.metadata);
       if(function.metadata.any((m)=>m.element.toString().split(" ")[0]==SimiloBase.COPYWITHCLASS)){
-        print(function);
-        print("is a copyWith func");
         bodies.add(CopyWithGen().generateForAnnotatedElement(element,null,null));
       }else{
         var f = function.toString();
