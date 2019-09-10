@@ -15,14 +15,20 @@ Future<void> main() async {
       'test/src', 'class_generator.dart');
   final copyWithGenReader = await initializeLibraryReaderForDirectory(
       'test/src', 'copy_with_generator.dart');
+  final integration =
+      await initializeLibraryReaderForDirectory('test', 'integration.dart');
   initializeBuildLogTracking();
   testAnnotatedElements<SimiloBase>(
     classGenReader,
     const ClassDefiner(),
-  ); 
+  );
   testAnnotatedElements<SimiloBase>(
     copyWithGenReader,
     const CopyWithGen(),
+  );
+  testAnnotatedElements<SimiloBase>(
+    integration,
+    const ClassDefiner(),
   );
 
   test_element_parser();

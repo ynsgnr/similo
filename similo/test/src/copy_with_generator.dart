@@ -12,9 +12,25 @@ abstract class TestCopyWith {
   final String base;
 
   @CopyWith
-  TestInheritenceBase copyWith(TestCopyWithValues v);
+  TestCopyWith copyWith(TestCopyWithValues v);
 
   const factory TestCopyWith(TestCopyWithValues v) = _$TestCopyWith;
+}
+
+@ShouldGenerate(r'''TestCopyWithNamed differentName(TestCopyWithNamedValues v) {
+  return _$TestCopyWithNamed(TestCopyWithNamedValues(
+    base: v.base != null ? v.base : this._values.base,
+  ));
+}
+''')
+@Const
+abstract class TestCopyWithNamed {
+  final String base;
+
+  @CopyWith
+  TestCopyWithNamed differentName(TestCopyWithNamedValues v);
+
+  const factory TestCopyWithNamed(TestCopyWithNamedValues v) = _$TestCopyWith;
 }
 
 @ShouldGenerate(r'''TestDefault copyWith(TestDefaultValues v) {

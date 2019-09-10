@@ -1,5 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/resolver/inheritance_manager.dart';
+import 'package:similo/src/copy_with_generator.dart';
+import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ElementParser {
@@ -43,17 +45,24 @@ class ElementParser {
     var bodies = List<String>();
     functions.forEach((function) {
       //Parse the function body
+      print(function);
       print(function.metadata);
-      var f = function.toString();
-      var splitted = contents.split(f);
-      if (splitted.length <= 1 || splitted[1].trim()[0] != "{") {
-        throw InvalidGenerationSourceError(
-        'Generator cannot target `$name` since it has a function without a body.',
-        todo: 'Add a body to missing function',
-        element: element);
+      if(function.metadata.any((m)=>m.element.toString().split(" ")[0]==SimiloBase.COPYWITHCLASS)){
+        print(function);
+        print("is a copyWith func");
+        bodies.add(CopyWithGen().generateForAnnotatedElement(element,null,null));
+      }else{
+        var f = function.toString();
+        var splitted = contents.split(f);
+        if (splitted.length <= 1 || splitted[1].trim()[0] != "{") {
+          throw InvalidGenerationSourceError(
+          'Generator cannot target `$name` since it has a function without a body.',
+          todo: 'Add a body to missing function',
+          element: element);
+        }
+        var body = getBetween(splitted[1], "{", "}");
+        bodies.add("$f{\n$body}");
       }
-      var body = getBetween(splitted[1], "{", "}");
-      bodies.add("$f{\n$body}");
     });
     return bodies;
   }

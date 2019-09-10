@@ -19,7 +19,6 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
         ? annotation.peek(ConstNamed.VALUESNAME).stringValue
         : "${e.name}Values";
 
-    //TODO add CopyWith
     //TODO add Scale
     //TODO add asserts tag for constructor such as @assert("example!=null");
     //TODO default variables from inherited classes
