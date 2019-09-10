@@ -34,7 +34,7 @@ class CopyWithGen extends GeneratorForAnnotation<SimiloBase> {
       element = e;
       classElement = element.enclosingElement as ClassElement;
     }
-    if (element == null || classElement == null) throw notAfunction;
+    if (element == null || classElement == null)return "";
 
     String valuesName = "${classElement.name}Values";
     String className = "_\$${classElement.name}";

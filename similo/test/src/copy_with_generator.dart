@@ -146,5 +146,36 @@ abstract class TestGivenValues {
     return value.toString() + v;
   }
 
+  @CopyWith
+  TestGivenValues copyWith(GivenValues v);
+
   const factory TestGivenValues(GivenValues b) = _$TestGivenValues;
+}
+
+@ShouldGenerate(r'''
+
+''')
+@Const
+abstract class TestNoAnnotations {
+  final int value;
+
+  String testFunction(String v) {
+    return value.toString() + v;
+  }
+
+  const factory TestNoAnnotations(TestNoAnnotationsValues b) = _$TestNoAnnotations;
+}
+
+@ShouldGenerate(r'''
+
+''')
+@ConstNamed(className: "GivenClass", valuesName: "GivenValues")
+abstract class TestNoAnnotationNamed {
+  final int value;
+
+  String testFunction(String v) {
+    return value.toString() + v;
+  }
+
+  const factory TestNoAnnotationNamed(TestNoAnnotationNamedValues b) = _$TestNoAnnotationNamed;
 }
