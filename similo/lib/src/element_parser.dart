@@ -37,22 +37,20 @@ class ElementParser {
   ) {
     if (element.methods.length == 0) return List<String>();
     final name = element.name;
-    final error = InvalidGenerationSourceError(
+
+    var contents = getClassCode(element);
+    var functions = element.methods;
+    var bodies = List<String>();
+    functions.forEach((function) {
+      //Parse the function body
+      print(function.metadata);
+      var f = function.toString();
+      var splitted = contents.split(f);
+      if (splitted.length <= 1 || splitted[1].trim()[0] != "{") {
+        throw InvalidGenerationSourceError(
         'Generator cannot target `$name` since it has a function without a body.',
         todo: 'Add a body to missing function',
         element: element);
-
-    var contents = getClassCode(element);
-    var functions = element.methods.map((m) => m.toString()).toList();
-    var bodies = List<String>();
-    functions.forEach((f) {
-      //Parse the function body
-      var splitted = contents.split(f);
-      if (splitted.length <= 1) {
-        throw error;
-      }
-      if (splitted[1].trim()[0] != "{") {
-        throw error;
       }
       var body = getBetween(splitted[1], "{", "}");
       bodies.add("$f{\n$body}");

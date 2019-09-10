@@ -22,9 +22,10 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     //TODO add CopyWith
     //TODO add Scale
     //TODO add asserts tag for constructor such as @assert("example!=null");
+    //TODO default variables from inherited classes
+    //TODO add support for copyWith and scale without const
 
-    final functions = ElementParser.getFunctions(e);
-    final functionBodies = functions.join("\n");
+    final functionBodies = ElementParser.getFunctions(e).join("\n");
 
     if (e is! ClassElement) {
       throw InvalidGenerationSourceError('Generator cannot target `$name` since it is not a class.',

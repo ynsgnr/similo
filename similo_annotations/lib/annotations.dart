@@ -1,6 +1,11 @@
 library similoannotations;
 
 class SimiloBase {
+
+  static const String COPYWITHCLASS = "CopyWithAnnotation";
+  static const String CONSTCLASS = "ConstAnnotation";
+  static const String CONSTNAMEDCLASS = "ConstNamed";
+
   const SimiloBase();
 }
 
