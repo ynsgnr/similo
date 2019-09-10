@@ -111,6 +111,46 @@ abstract class TestDefault {
 }
 
 @ShouldGenerate(r'''
+class _$TestSomeDefault implements TestSomeDefault {
+  final TestSomeDefaultValues _values;
+
+  const _$TestSomeDefault(TestSomeDefaultValues v) : this._values = v;
+
+  //Getters
+  get stringValue => _values.stringValue;
+  get doubleValue => _values.doubleValue;
+  get intValue => _values.intValue;
+  get boolValue => _values.boolValue;
+}
+
+//Values
+class TestSomeDefaultValues {
+  //Define variables with types
+  final String stringValue;
+  final double doubleValue;
+  final int intValue;
+  final bool boolValue;
+
+  //Write const constructor
+  const TestSomeDefaultValues({
+    this.stringValue = "test",
+    this.doubleValue = 3,
+    this.intValue,
+    this.boolValue,
+  });
+}
+''')
+@Const
+abstract class TestSomeDefault {
+  final String stringValue = "test";
+  final double doubleValue = 3;
+  final int intValue;
+  final bool boolValue;
+
+  const factory TestSomeDefault(TestSomeDefaultValues b) = _$TestSomeDefault;
+}
+
+@ShouldGenerate(r'''
 class _$TestEmpty implements TestEmpty {
   final TestEmptyValues _values;
 
