@@ -40,10 +40,10 @@ class CopyWithGen extends GeneratorForAnnotation<SimiloBase> {
     String className = "_\$${classElement.name}";
     classElement.metadata.forEach((m) {
       if (m.element.toString().split(" ")[0] == SimiloBase.CONSTNAMEDCLASS) {
-        if(m.constantValue.getField(ConstNamed.VALUESNAME) != null || m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue()!=null){
+        if(m.constantValue.getField(ConstNamed.VALUESNAME) != null && m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue()!=null){
           valuesName = m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue();
         }
-        if(m.constantValue.getField(ConstNamed.CLASSNAME) != null || m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue()!=null){
+        if(m.constantValue.getField(ConstNamed.CLASSNAME) != null && m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue()!=null){
           className = m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue();
         }
       }

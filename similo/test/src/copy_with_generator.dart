@@ -112,7 +112,7 @@ abstract class TestGivenNameValues {
   const factory TestGivenNameValues(GivenValues b) = GivenClass;
 }
 
-@ShouldGenerate(r'''GivenClass copyWith(TestGivenNameValues v) {
+@ShouldGenerate(r'''TestGivenName copyWith(TestGivenNameValues v) {
   return GivenClass(TestGivenNameValues(
     value: v.value != null ? v.value : this._values.value,
   ));
