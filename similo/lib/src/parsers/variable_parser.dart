@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/resolver/inheritance_manager.dart';
-import 'package:similo/src/element_parser.dart';
+import 'package:similo/src/parsers/code_parser.dart';
 
 class VariableParser {
   //Get variables only inside the class
@@ -37,9 +37,9 @@ class VariableParser {
 
   static List<List<String>> getAllVariablesDefaultsFrom(ClassElement element) {
     var list = getAllVariablesFrom(element);
-    var fl = ElementParser.getFirstLevel(element);
+    var fl = CodeParser.getFirstLevel(element);
     return list.map((e) {
-      e.add(ElementParser.getDefaultValueFor(element, e[1],
+      e.add(CodeParser.getDefaultValueFor(element, e[1],
           firstLevelContent: fl));
       return e;
     }).toList();

@@ -1,58 +1,10 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/src/dart/resolver/inheritance_manager.dart';
 import 'package:similo/src/copy_with_generator.dart';
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:analyzer/dart/element/element.dart';
 
-class ElementParser {
-  static List<String> getClassAndValueNames(ClassElement classElement){
-    String valuesName = "${classElement.name}Values";
-    String className = "_\$${classElement.name}";
-    classElement.metadata.forEach((m) {
-      if (m.element.toString().split(" ")[0] == SimiloBase.CONSTNAMEDCLASS) {
-        if (m.constantValue.getField(ConstNamed.VALUESNAME) != null &&
-            m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue() !=
-                null) {
-          valuesName =
-              m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue();
-        }
-        if (m.constantValue.getField(ConstNamed.CLASSNAME) != null &&
-            m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue() !=
-                null) {
-          className =
-              m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue();
-        }
-      }
-    });
-    return [className,valuesName];
-  }
-  static List<Element> getFunctionAndClass(Element e, String byAnnotationName) {
-    var notAfunction = InvalidGenerationSourceError(
-        'Copy generator cannot target `${e.name}` since it is not a function.',
-        todo: 'Remove the Const annotation from `${e.name}`.',
-        element: e);
-    Element element;
-    ClassElement classElement;
-    if (e is! FunctionElement || e is! MethodElement) {
-      if (e is! ClassElement) {
-        throw notAfunction;
-      } else {
-        classElement = e as ClassElement;
-        classElement.methods.forEach((m) {
-          m.metadata.forEach((metadata) {
-            if (metadata.element.toString().split(" ")[0] == byAnnotationName) {
-              element = m;
-            }
-          });
-        });
-      }
-    } else {
-      element = e;
-      classElement = element.enclosingElement as ClassElement;
-    }
-    return [element, classElement];
-  }
-
+class CodeParser {
+  
   static String getFirstLevel(ClassElement element) {
     var content = getClassCode(element);
     if (content.indexOf("{") < 0 || content.lastIndexOf("}") < 0)
@@ -92,6 +44,7 @@ class ElementParser {
     var functions = element.methods;
     var bodies = List<String>();
     functions.forEach((function) {
+      //TODO check for other function builders
       if (function.metadata.any((m) =>
           m.element.toString().split(" ")[0] == SimiloBase.COPYWITHCLASS)) {
         bodies.add(
@@ -155,21 +108,5 @@ class ElementParser {
     }
     if (startIndex == -1) return '';
     return content.substring(startIndex + 1, stopIndex);
-  }
-
-  static bool isInheritedConst(Element element) {
-    final map = InheritanceManager(element.library)
-        .getMembersInheritedFromClasses(element);
-    bool inheritedCost = true;
-    map.keys.forEach((key) {
-      if (map[key].kind == ElementKind.GETTER && map.containsKey(key + "=")) {
-        inheritedCost = false;
-      }
-    });
-    return inheritedCost;
-  }
-
-  static bool isConst(ClassElement element) {
-    return isInheritedConst(element) && element.unnamedConstructor.isConst;
   }
 }

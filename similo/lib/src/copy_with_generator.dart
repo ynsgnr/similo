@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
-import 'package:similo/src/element_parser.dart';
-import 'package:similo/src/variable_parser.dart';
+import 'package:similo/src/parsers/class_parser.dart';
+import 'package:similo/src/parsers/variable_parser.dart';
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -12,12 +12,12 @@ class CopyWithGen extends GeneratorForAnnotation<SimiloBase> {
   generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
     var elements =
-        ElementParser.getFunctionAndClass(e, SimiloBase.COPYWITHCLASS);
+        ClassParser.getFunctionAndClass(e, SimiloBase.COPYWITHCLASS);
     var element = elements[0];
     var classElement = elements[1];
     if (element == null || classElement == null) return "";
 
-    var names = ElementParser.getClassAndValueNames(classElement);
+    var names = ClassParser.getClassAndValueNames(classElement);
     var className = names[0];
     var valuesName = names[1];
 

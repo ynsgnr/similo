@@ -1,8 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build/src/builder/build_step.dart';
-import 'package:similo/src/element_parser.dart';
-import 'package:similo/src/variable_parser.dart';
+import 'package:similo/src/parsers/class_parser.dart';
+import 'package:similo/src/parsers/code_parser.dart';
+import 'package:similo/src/parsers/variable_parser.dart';
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -19,14 +20,15 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
         ? annotation.peek(ConstNamed.VALUESNAME).stringValue
         : "${e.name}Values";
 
-    //TODO add Scale
+    //TODO add Scale with a map of functions so it can be configured later and nonscallable annotation for values to be exluded
+    //TODO separate element parser to class parser and function parser its getting too big
+    //TODO add build checks with warnings
     //TODO add asserts tag for constructor such as @assert("example!=null");
     //TODO add hidden tag for hiding variables from constructors, those must have a default value
     //TODO default variables from inherited classes
     //TODO add support for copyWith and scale without const
-    //TODO add build checks with warnings
 
-    final functionBodies = ElementParser.getFunctions(e).join("\n");
+    final functionBodies = CodeParser.getFunctions(e).join("\n");
 
     if (e is! ClassElement) {
       throw InvalidGenerationSourceError(
@@ -44,7 +46,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
           element: e);
     }
 
-    if (!ElementParser.isConst(e)) {
+    if (!ClassParser.checkIfConst(e)) {
       throw InvalidGenerationSourceError(
           'Generator cannot target `${e.name}` since it is not const or it inherited a non const class .',
           todo:

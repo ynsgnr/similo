@@ -9,6 +9,9 @@ abstract class Example{
   final String exampleWithDefault = "this is a default value";
   final String _hiddenValue = "hidden";
 
+  @ScallableWith(Width)
+  final double scaleThis;
+
   //You can use concreate functions!
   //They will be copied to new class too!
   String testFunction(String toAdd){

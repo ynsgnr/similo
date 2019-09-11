@@ -1,12 +1,12 @@
-import 'package:similo/src/element_parser.dart';
+import 'package:similo/src/parsers/code_parser.dart';
 import 'package:test/test.dart';
 
-void test_element_parser() {
+void test_code_parser() {
   group("Element Parser Unit Tests", () {
     group("getBetween", () {
       test("Empty string", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             "",
             "{",
             "}",
@@ -16,7 +16,7 @@ void test_element_parser() {
       });
       test("Random string without indicators", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             ";as[sad[;f.as'd.[asfsd[.f[aspf",
             "{",
             "}",
@@ -26,7 +26,7 @@ void test_element_parser() {
       });
       test("Random string with indicators", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             "{;as[sad[;f.as'd.[asfsd[.f[aspf}",
             "{",
             "}",
@@ -36,7 +36,7 @@ void test_element_parser() {
       });
       test("Random string with indicators inside", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             ";as[sad[;f.a{s'd.[asfsd}[.f[aspf}",
             "{",
             "}",
@@ -46,7 +46,7 @@ void test_element_parser() {
       });
       test("Class", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             """
                 class Test{
                   //Comments
@@ -82,7 +82,7 @@ void test_element_parser() {
       });
       test("Empty Function Definitions", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             """
               void emptyFunctions(){
 
@@ -96,7 +96,7 @@ void test_element_parser() {
       });
       test("Function Definitions", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             """
               String functions(String v, int intv){
                 return v+intv.toString();
@@ -110,7 +110,7 @@ void test_element_parser() {
       });
       test("Multiple child", () {
         expect(
-          ElementParser.getBetween(
+          CodeParser.getBetween(
             """
               void testFunction(){
                   {
@@ -139,5 +139,5 @@ void test_element_parser() {
 }
 
 void main() {
-  test_element_parser();
+  test_code_parser();
 }

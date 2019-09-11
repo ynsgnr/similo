@@ -7,7 +7,7 @@ import 'package:source_gen_test/src/build_log_tracking.dart';
 import 'package:source_gen_test/src/init_library_reader.dart';
 import 'package:source_gen_test/src/test_annotated_classes.dart';
 
-import 'src/element_parser.dart';
+import 'src/parsers/code_parser.dart';
 
 Future<void> main() async {
   //Class Definer Tests
@@ -31,5 +31,5 @@ Future<void> main() async {
     const ClassDefiner(),
   );
 
-  test_element_parser();
+  test_code_parser();
 }
