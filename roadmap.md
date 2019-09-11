@@ -1,5 +1,0 @@
-- Implement Const
-- Implement copywith
-- Implement scale (for only scalable values)
-- Impelement assert for const
-- Implement super for const

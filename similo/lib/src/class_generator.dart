@@ -21,8 +21,10 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
 
     //TODO add Scale
     //TODO add asserts tag for constructor such as @assert("example!=null");
+    //TODO add hidden tag for hiding variables from constructors, those must have a default value
     //TODO default variables from inherited classes
     //TODO add support for copyWith and scale without const
+    //TODO add build checks with warnings
 
     final functionBodies = ElementParser.getFunctions(e).join("\n");
 
