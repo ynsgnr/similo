@@ -4,9 +4,8 @@ import 'package:source_gen_test/source_gen_test.dart';
 
 import '../mocks/custom_string.dart';
 
-@ShouldGenerate(r'''TestCopyWith customTest(TestCopyWithValues v) {
-  return copyWith(TestCopyWithValues( 
-    base: v.base != null ? v.base : this._values.base,
+@ShouldGenerate(r'''TestCustomGen customTest() {
+  return copyWith(TestCustomGenValues(
     customString: customString + ' Customized String ',
   ));
 }
@@ -20,7 +19,7 @@ abstract class TestCustomGen {
   TestCustomGen copyWith(TestCustomGenValues v);
 
   @SimiloCustom()
-  TestCustomGen customTest(TestCustomGenValues v);
+  TestCustomGen customTest();
 
   const factory TestCustomGen(TestCustomGenValues v) = _$TestCustomGen;
 }

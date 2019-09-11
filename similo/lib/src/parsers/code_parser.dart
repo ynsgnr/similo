@@ -34,6 +34,23 @@ class CodeParser {
     return splitted[1];
   }
 
+  static String getTypeFor(ClassElement element, String value,
+      {String firstLevelContent}) {
+    var levelContent = firstLevelContent ?? getFirstLevel(element);
+    var splitted = levelContent.split(";");
+    var i = 0;
+    List<String> possible;
+    while (i != -1 && i < splitted.length) {
+      possible = splitted[i].split(value);
+      i++;
+      if (possible.length > 1) {
+        i = -1;
+      }
+    }
+    if (i != -1) return "dynamic";
+    return possible[0].replaceAll("final", "").replaceAll("const", "").trim();
+  }
+
   static List<String> getFunctions(
     ClassElement element,
   ) {

@@ -20,8 +20,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
         ? annotation.peek(ConstNamed.VALUESNAME).stringValue
         : "${e.name}Values";
 
-    //TODO add Scale with a map of functions so it can be configured later and nonscallable annotation for values to be exluded
-    //TODO separate element parser to class parser and function parser its getting too big
+    //TODO add Scale with custom modifier
     //TODO add build checks with warnings
     //TODO add asserts tag for constructor such as @assert("example!=null");
     //TODO add hidden tag for hiding variables from constructors, those must have a default value

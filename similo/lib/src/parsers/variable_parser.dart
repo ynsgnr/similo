@@ -8,7 +8,9 @@ class VariableParser {
     return element.fields
         .where((e) => !e.isStatic)
         .map((e) => [
-              e.type.toString(),
+              e.type.toString() == "dynamic"
+                  ? CodeParser.getTypeFor(element, e.name)
+                  : e.type.toString(),
               e.name,
             ])
         .toList();
@@ -39,8 +41,8 @@ class VariableParser {
     var list = getAllVariablesFrom(element);
     var fl = CodeParser.getFirstLevel(element);
     return list.map((e) {
-      e.add(CodeParser.getDefaultValueFor(element, e[1],
-          firstLevelContent: fl));
+      e.add(
+          CodeParser.getDefaultValueFor(element, e[1], firstLevelContent: fl));
       return e;
     }).toList();
   }
