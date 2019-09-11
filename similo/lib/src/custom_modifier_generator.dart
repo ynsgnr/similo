@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:similo/src/parsers/class_parser.dart';
+import 'package:similo/src/parsers/code_parser.dart';
 import 'package:similo/src/parsers/variable_parser.dart';
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
@@ -42,8 +43,9 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
           }
         });
     final allSet = allModifiers.join("\n");
+    final function = element.toString().contains("dynamic") ? CodeParser.getFunctionSignature(element)  : element.toString() ;
 
-    return """${element.toString()}{
+    return """$function{
       return ${copyWith.name} ($valuesName(
         $allSet
       ));

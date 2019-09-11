@@ -210,3 +210,27 @@ abstract class TestNoAnnotationNamed {
   const factory TestNoAnnotationNamed(TestNoAnnotationNamedValues b) =
       _$TestNoAnnotationNamed;
 }
+
+@ShouldGenerate(r'''TestCustomInput customTest(CustomString toAdd) {
+  return copyWith(TestCustomInputValues(
+    customString: customString + ' Customized String ',
+  ));
+}
+''')
+@Const
+abstract class TestCustomInput {
+  final int value;
+  final CustomString customString;
+
+  String testFunction(String v) {
+    return value.toString() + v;
+  }
+
+  @CopyWith
+  TestCustomInput copyWith(TestCustomInputValues v);
+  
+  @SimiloCustom()
+  TestCustomInput customTest(CustomString toAdd);
+
+  const factory TestCustomInput(TestCustomInputValues b) = _$TestCustomInput;
+}

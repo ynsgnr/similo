@@ -4,6 +4,18 @@ import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 
 class CodeParser {
+
+  static String getFunctionSignature(Element element){
+    var content = getClassCode(element);
+    var splitted = content.split("${element.name}(");
+    if(splitted.length<2) return element.name;
+    splitted = splitted[1].split(")");
+    if(splitted.length<2) return element.name;
+
+    var functionDefine = element.toString().split("(")[0];
+    var variables = splitted[0];
+    return "$functionDefine($variables)";
+  }
   
   static String getFirstLevel(ClassElement element) {
     var content = getClassCode(element);
@@ -82,8 +94,19 @@ class CodeParser {
     return bodies;
   }
 
-  static String getClassCode(ClassElement element) {
+  static String getClassCode(Element e) {
     //var contents = await buildStep.readAsString(buildStep.inputId);
+    ClassElement element;
+    if(e is ClassElement){
+      element = e;
+    }else if(e.enclosingElement is ClassElement) {
+      element = e.enclosingElement;
+    }else{
+      throw InvalidGenerationSourceError(
+              'Generator cannot target `${e.name}` since its unable to reach parent class.',
+              todo: 'Check parent class',
+              element: element);
+    }
     var contents =
         element.source.contents.data; //Using this might cause problems
     var splitted = contents.split(element.toString());
