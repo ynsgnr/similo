@@ -16,9 +16,6 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
     var elements = ClassParser.getFunctionAndClass(e, SimiloBase.CUSTOMCLASS);
     var element = elements[0];
     var classElement = elements[1];
-    print(element);
-    print(classElement);
-    print(modifiers);
     if (element == null || classElement == null) return "";
 
     var valuesName = ClassParser.getClassAndValueNames(classElement)[1];
@@ -36,18 +33,14 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
     List<String> allModifiers = List<String>();
     variables
         .forEach((v) {
-          print(v[0]);
-          print(modifiers.containsKey(v[0]));
           if(modifiers.containsKey(v[0])){
             final variableName = v[1];
             final customSet = modifiers[v[0]](variableName);
-            print("$variableName: $customSet,");
             allModifiers.add(
               "$variableName: $customSet,"
             );
           }
         });
-    print(allModifiers);
     final allSet = allModifiers.join("\n");
 
     return """${element.toString()}{
