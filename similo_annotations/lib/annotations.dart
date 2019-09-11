@@ -6,6 +6,7 @@ class SimiloBase {
   static const String SCALECLASS = "ScaleAnnotation";
   static const String CONSTCLASS = "ConstAnnotation";
   static const String CONSTNAMEDCLASS = "ConstNamed";
+  static const String CUSTOMCLASS = "SimiloCustom";
 
   const SimiloBase();
 }
@@ -22,7 +23,11 @@ class CopyWithAnnotation extends SimiloBase {
   const CopyWithAnnotation();
 }
 
-class ScaleAnnotation extends SimiloBase {
+class SimiloCustom extends SimiloBase {
+  const SimiloCustom();
+}
+
+class ScaleAnnotation extends SimiloCustom {
   const ScaleAnnotation();
 }
 

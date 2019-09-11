@@ -23,7 +23,7 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
     var copyWith = ClassParser.getFunctionAndClass(e, SimiloBase.COPYWITHCLASS)[1];
     if(copyWith==null){
       throw InvalidGenerationSourceError(
-        'Scale generator cannot target `${e.name}` since it is not a part of class with copy function.',
+        'Custom generator cannot target `${e.name}` since it is not a part of class with copy function.',
         todo: 'Add a @CopyWith annotation and create a copy function for the class`.',
         element: e);
     }
@@ -37,7 +37,7 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
             final variableName = v[1];
             final customSet = modifiers[v[0]](variableName);
             allModifiers.add(
-              "$variableName: $customSet"
+              "$variableName: $customSet,"
             );
           }
         });

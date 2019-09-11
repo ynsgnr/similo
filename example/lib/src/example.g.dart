@@ -26,6 +26,7 @@ class _$Example implements Example {
           : this._values.exampleWithDefault,
       hiddenValue:
           v.hiddenValue != "hidden" ? v.hiddenValue : this._values.hiddenValue,
+      scaleThis: v.scaleThis != null ? v.scaleThis : this._values.scaleThis,
     ));
   }
 
@@ -33,6 +34,7 @@ class _$Example implements Example {
   get example => _values.example;
   get exampleWithDefault => _values.exampleWithDefault;
   get _hiddenValue => _values.hiddenValue;
+  get scaleThis => _values.scaleThis;
 }
 
 //Values
@@ -41,11 +43,13 @@ class ExampleValues {
   final String example;
   final String exampleWithDefault;
   final String hiddenValue;
+  final double scaleThis;
 
   //Write const constructor
   const ExampleValues({
     this.example,
     this.exampleWithDefault = "this is a default value",
     this.hiddenValue = "hidden",
+    this.scaleThis,
   });
 }

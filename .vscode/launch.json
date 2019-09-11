@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Class Generator Test",
+            "type": "dart",
+            "request": "launch",
+            "program": "similo/test/src/class_generator/main.dart"
+        },
+        {
+            "name": "Copy With Test",
+            "type": "dart",
+            "request": "launch",
+            "program": "similo/test/src/copy_with_generator/main.dart"
+        },
+        {
             "name": "Custom Modifier Test",
             "type": "dart",
             "request": "launch",
@@ -14,13 +26,13 @@
             "name": "Dart: Run all Tests",
             "type": "dart",
             "request": "launch",
-            "program": "similo/test/all.dart"
+            "program": "similo/test/main.dart"
         },
         {
             "name": "Similo Example",
             "type": "dart",
             "request": "launch",
-            "program": "example/lib/main.dart"
+            "program": "example/bin/main.dart"
         }
     ]
 }

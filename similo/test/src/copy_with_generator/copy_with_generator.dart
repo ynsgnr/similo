@@ -1,5 +1,6 @@
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen_test/annotations.dart';
+import 'package:source_gen_test/source_gen_test.dart';
 
 @ShouldGenerate(r'''TestCopyWith copyWith(TestCopyWithValues v) {
   return _$TestCopyWith(TestCopyWithValues(
