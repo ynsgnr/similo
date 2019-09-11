@@ -30,7 +30,7 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
     }
 
     final variables =
-        VariableParser.getAllVariablesDefaultsFrom(element.enclosingElement);
+        VariableParser.getAllVariablesDefaultsFrom(classElement);
     List<String> allModifiers = List<String>();
     variables
         .forEach((v) {

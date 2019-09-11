@@ -27,15 +27,14 @@ class ClassParser {
   }
 
   static List<Element> getFunctionAndClass(Element e, String byAnnotationName) {
-    var notAfunction = InvalidGenerationSourceError(
+    Element element;
+    ClassElement classElement;
+    if (e is! FunctionElement && e is! MethodElement) {
+      if (e is! ClassElement) {
+        throw InvalidGenerationSourceError(
         'Copy generator cannot target `${e.name}` since it is not a function.',
         todo: 'Remove the Const annotation from `${e.name}`.',
         element: e);
-    Element element;
-    ClassElement classElement;
-    if (e is! FunctionElement || e is! MethodElement) {
-      if (e is! ClassElement) {
-        throw notAfunction;
       } else {
         classElement = e as ClassElement;
         classElement.methods.forEach((m) {
