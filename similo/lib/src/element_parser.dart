@@ -5,6 +5,54 @@ import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ElementParser {
+  static List<String> getClassAndValueNames(ClassElement classElement){
+    String valuesName = "${classElement.name}Values";
+    String className = "_\$${classElement.name}";
+    classElement.metadata.forEach((m) {
+      if (m.element.toString().split(" ")[0] == SimiloBase.CONSTNAMEDCLASS) {
+        if (m.constantValue.getField(ConstNamed.VALUESNAME) != null &&
+            m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue() !=
+                null) {
+          valuesName =
+              m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue();
+        }
+        if (m.constantValue.getField(ConstNamed.CLASSNAME) != null &&
+            m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue() !=
+                null) {
+          className =
+              m.constantValue.getField(ConstNamed.CLASSNAME).toStringValue();
+        }
+      }
+    });
+    return [className,valuesName];
+  }
+  static List<Element> getFunctionAndClass(Element e, String byAnnotationName) {
+    var notAfunction = InvalidGenerationSourceError(
+        'Copy generator cannot target `${e.name}` since it is not a function.',
+        todo: 'Remove the Const annotation from `${e.name}`.',
+        element: e);
+    Element element;
+    ClassElement classElement;
+    if (e is! FunctionElement || e is! MethodElement) {
+      if (e is! ClassElement) {
+        throw notAfunction;
+      } else {
+        classElement = e as ClassElement;
+        classElement.methods.forEach((m) {
+          m.metadata.forEach((metadata) {
+            if (metadata.element.toString().split(" ")[0] == byAnnotationName) {
+              element = m;
+            }
+          });
+        });
+      }
+    } else {
+      element = e;
+      classElement = element.enclosingElement as ClassElement;
+    }
+    return [element, classElement];
+  }
+
   static String getFirstLevel(ClassElement element) {
     var content = getClassCode(element);
     if (content.indexOf("{") < 0 || content.lastIndexOf("}") < 0)
@@ -44,16 +92,18 @@ class ElementParser {
     var functions = element.methods;
     var bodies = List<String>();
     functions.forEach((function) {
-      if(function.metadata.any((m)=>m.element.toString().split(" ")[0]==SimiloBase.COPYWITHCLASS)){
-        bodies.add(CopyWithGen().generateForAnnotatedElement(element,null,null));
-      }else{
+      if (function.metadata.any((m) =>
+          m.element.toString().split(" ")[0] == SimiloBase.COPYWITHCLASS)) {
+        bodies.add(
+            CopyWithGen().generateForAnnotatedElement(element, null, null));
+      } else {
         var f = function.toString();
         var splitted = contents.split(f);
         if (splitted.length <= 1 || splitted[1].trim()[0] != "{") {
           throw InvalidGenerationSourceError(
-          'Generator cannot target `$name` since it has a function without a body.',
-          todo: 'Add a body to missing function',
-          element: element);
+              'Generator cannot target `$name` since it has a function without a body.',
+              todo: 'Add a body to missing function',
+              element: element);
         }
         var body = getBetween(splitted[1], "{", "}");
         bodies.add("$f{\n$body}");
@@ -119,8 +169,7 @@ class ElementParser {
     return inheritedCost;
   }
 
-  static bool isConst(ClassElement element){
+  static bool isConst(ClassElement element) {
     return isInheritedConst(element) && element.unnamedConstructor.isConst;
   }
-
 }
