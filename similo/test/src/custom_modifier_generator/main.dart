@@ -13,6 +13,7 @@ Future main() async {
     CustomModifier({
       "CustomString": (String variableName)=>"$variableName + ' Customized String ' ",
       "NonExistingValue": (String variableName)=>"",
+      "double": (String variableName)=>"$variableName + 1",
     }),
   );
 }
