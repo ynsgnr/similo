@@ -234,3 +234,22 @@ abstract class TestCustomInput {
 
   const factory TestCustomInput(TestCustomInputValues b) = _$TestCustomInput;
 }
+
+@ShouldGenerate(r'''TestCustomGenExclusiveAnnotation customTest() {
+  return copyWith(TestCustomGenExclusiveAnnotationValues());
+}
+''')
+@Const
+abstract class TestCustomGenExclusiveAnnotation {
+  final String base;
+  //TODO add exclusive tag here
+  final CustomString customString;
+
+  @CopyWith
+  TestCustomGenExclusiveAnnotation copyWith(TestCustomGenExclusiveAnnotationValues v);
+
+  @SimiloCustom()
+  TestCustomGenExclusiveAnnotation customTest();
+
+  const factory TestCustomGenExclusiveAnnotation(TestCustomGenExclusiveAnnotationValues v) = _$TestCustomGenExclusiveAnnotation;
+}
