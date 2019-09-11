@@ -22,9 +22,18 @@ class ConstNamed extends ConstAnnotation {
 const Width = true;
 const Height = false;
 
-class ScallableWith extends SimiloVariableBase{
+class ScallableWith extends CustomVariable {
   final bool width;
   final bool height;
 
-  const ScallableWith(bool direction):this.width=direction,this.height=!direction;
+  const ScallableWith(bool direction)
+      : this.width = direction,
+        this.height = !direction;
+
+  @override
+  String getModifier(String variableName) {
+    return width
+        ? "screenUtil.setWidth($variableName)"
+        : "screenUtil.setHeight($variableName)";
+  }
 }
