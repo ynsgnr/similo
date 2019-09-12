@@ -242,7 +242,7 @@ abstract class TestCustomInput {
 @Const
 abstract class TestCustomGenExclusiveAnnotation {
   final String base;
-  //TODO add exclusive tag here
+  @NonScallableAnnotation()
   final CustomString customString;
 
   @CopyWith
@@ -252,4 +252,48 @@ abstract class TestCustomGenExclusiveAnnotation {
   TestCustomGenExclusiveAnnotation customTest();
 
   const factory TestCustomGenExclusiveAnnotation(TestCustomGenExclusiveAnnotationValues v) = _$TestCustomGenExclusiveAnnotation;
+}
+
+@ShouldGenerate(r'''TestCustomGenCustomAnnotation customTest() {
+  return copyWith(TestCustomGenCustomAnnotationValues(
+    value: screenUtil.setWidth(value),
+  ));
+}
+''')
+@Const
+abstract class TestCustomGenCustomAnnotation {
+  final String base;
+  @ScallableWith(Width)
+  final double value;
+
+  @CopyWith
+  TestCustomGenCustomAnnotation copyWith(TestCustomGenCustomAnnotationValues v);
+
+  @SimiloCustom()
+  TestCustomGenCustomAnnotation customTest();
+
+  const factory TestCustomGenCustomAnnotation(TestCustomGenCustomAnnotationValues v) = _$TestCustomGenCustomAnnotation;
+}
+
+
+
+@ShouldGenerate(r'''TestCustomGenNotValidAnnotation customTest() {
+  return copyWith(TestCustomGenNotValidAnnotationValues(
+    value: value + 1,
+  ));
+}
+''')
+@Const
+abstract class TestCustomGenNotValidAnnotation {
+  final String base;
+  @Const
+  final double value;
+
+  @CopyWith
+  TestCustomGenNotValidAnnotation copyWith(TestCustomGenNotValidAnnotationValues v);
+
+  @SimiloCustom()
+  TestCustomGenNotValidAnnotation customTest();
+
+  const factory TestCustomGenNotValidAnnotation(TestCustomGenNotValidAnnotationValues v) = _$TestCustomGenNotValidAnnotation;
 }

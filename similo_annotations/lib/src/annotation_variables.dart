@@ -22,17 +22,8 @@ const Width = true;
 const Height = false;
 
 class ScallableWith extends CustomVariable {
-  final bool width;
-  final bool height;
-
-  const ScallableWith(bool direction)
-      : this.width = direction,
-        this.height = !direction;
-
-  @override
-  String getModifier(String variableName) {
-    return width
-        ? "screenUtil.setWidth($variableName)"
-        : "screenUtil.setHeight($variableName)";
-  }
+  final String modifier;
+  const ScallableWith(bool direction):
+    modifier = direction ? "screenUtil.setWidth(\$variableName)" : "screenUtil.setHeight(\$variableName)",
+    super(direction ? "screenUtil.setWidth(\$variableName)" : "screenUtil.setHeight(\$variableName)");
 }

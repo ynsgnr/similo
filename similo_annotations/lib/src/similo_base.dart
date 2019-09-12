@@ -5,6 +5,7 @@ class SimiloBase {
   static const String CONSTCLASS = "ConstAnnotation";
   static const String CONSTNAMEDCLASS = "ConstNamed";
   static const String CUSTOMCLASS = "SimiloCustom";
+  static const String MODIFIERONCUSTOM = "modifier";
 
   const SimiloBase();
 }

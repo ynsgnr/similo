@@ -12,10 +12,10 @@ class SimiloCustom extends SimiloBase {
   const SimiloCustom();
 }
 
-abstract class CustomVariable extends SimiloVariableBase{
-  String getModifier (String variableName);
+abstract class CustomVariable extends SimiloVariableBase {
+  final String modifier;
 
-  const CustomVariable();
+  const CustomVariable(this.modifier);
 }
 
 class ScaleAnnotation extends SimiloCustom {
@@ -23,10 +23,9 @@ class ScaleAnnotation extends SimiloCustom {
 }
 
 class NonScallableAnnotation extends CustomVariable {
-  const NonScallableAnnotation();
+  final String modifier;
 
-  @override
-  String getModifier(String variableName) {
-    return null;
-  }
+  const NonScallableAnnotation()
+      : modifier = "",
+        super("");
 }
