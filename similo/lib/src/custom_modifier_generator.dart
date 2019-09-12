@@ -59,9 +59,7 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
       }
     });
     final allSet = allModifiers.join("\n");
-    final function = element.toString().contains("dynamic")
-        ? CodeParser.getFunctionSignature(element)
-        : element.toString();
+    final function = CodeParser.getFunctionSignature(element);
 
     return """$function{
       return ${copyWith.name} ($valuesName(

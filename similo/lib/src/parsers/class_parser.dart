@@ -8,7 +8,7 @@ class ClassParser {
     String valuesName = "${classElement.name}Values";
     String className = "_\$${classElement.name}";
     classElement.metadata.forEach((m) {
-      if (m.element.toString().split(" ")[0] == SimiloBase.CONSTNAMEDCLASS) {
+      if (m.computeConstantValue().type.toString() == SimiloBase.CONSTNAMEDCLASS) {
         if (m.constantValue.getField(ConstNamed.VALUESNAME) != null &&
             m.constantValue.getField(ConstNamed.VALUESNAME).toStringValue() !=
                 null) {
@@ -39,7 +39,7 @@ class ClassParser {
         classElement = e as ClassElement;
         classElement.methods.forEach((m) {
           m.metadata.forEach((metadata) {
-            if (metadata.element.toString().split(" ")[0] == byAnnotationName) {
+            if (metadata.computeConstantValue().type.toString() == byAnnotationName) {
               element = m;
             }
           });

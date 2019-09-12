@@ -172,7 +172,7 @@ abstract class TestSomeDefault {
 
   TestGivenNameValues scale(ScreenUtils screenUtils) {
     return copyWith(GivenValues(
-      value: screenUtil.setHeight(value),
+      value: screenUtils.setHeight(value),
     ));
   }
 

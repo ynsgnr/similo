@@ -4,13 +4,13 @@ import 'package:similo_annotations/annotations.dart';
 class ScaleGen extends CustomModifier {
   ScaleGen():super({
     "TextStyle": (String variableName)=>"""$variableName.copyWith(
-        fontSize: screenUtil.setSp(this.$variableName.fontSize),
+        fontSize: screenUtils.setSp(this.$variableName.fontSize),
       )""",
     "EdgeInsets": (String variableName)=>"""EdgeInsets.only(
-        left: screenUtil.setWidth($variableName.left),
-        right: screenUtil.setWidth($variableName.right),
-        top: screenUtil.setHeight($variableName.top),
-        bottom: screenUtil.setHeight($variableName.bottom),
+        left: screenUtils.setWidth($variableName.left),
+        right: screenUtils.setWidth($variableName.right),
+        top: screenUtils.setHeight($variableName.top),
+        bottom: screenUtils.setHeight($variableName.bottom),
       )""",
   },annotationName:SimiloBase.SCALECLASS);
 }

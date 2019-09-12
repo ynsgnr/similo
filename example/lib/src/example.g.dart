@@ -18,7 +18,29 @@ class _$Example implements Example {
     return _hiddenValue + toAdd;
   }
 
+  Example copyObject(ExampleValues v) {
+    return _$Example(ExampleValues(
+      example: v.example != null ? v.example : this._values.example,
+      exampleWithDefault: v.exampleWithDefault != "this is a default value"
+          ? v.exampleWithDefault
+          : this._values.exampleWithDefault,
+      hiddenValue:
+          v.hiddenValue != "hidden" ? v.hiddenValue : this._values.hiddenValue,
+      scaleThis: v.scaleThis != null ? v.scaleThis : this._values.scaleThis,
+      dontScaleThis: v.dontScaleThis != null
+          ? v.dontScaleThis
+          : this._values.dontScaleThis,
+    ));
+  }
+
+  scaleFun(ScreenUtils screenUtils) {
+    return copyObject(ExampleValues(
+      scaleThis: screenUtils.setWidth(scaleThis),
+    ));
+  }
+
   //Getters
+  get example => _values.example;
   get exampleWithDefault => _values.exampleWithDefault;
   get _hiddenValue => _values.hiddenValue;
   get scaleThis => _values.scaleThis;
@@ -28,6 +50,7 @@ class _$Example implements Example {
 //Values
 class ExampleValues {
   //Define variables with types
+  final String example;
   final String exampleWithDefault;
   final String hiddenValue;
   final double scaleThis;
@@ -35,6 +58,7 @@ class ExampleValues {
 
   //Write const constructor
   const ExampleValues({
+    this.example,
     this.exampleWithDefault = "this is a default value",
     this.hiddenValue = "hidden",
     this.scaleThis,
