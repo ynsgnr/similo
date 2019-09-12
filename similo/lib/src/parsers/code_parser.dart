@@ -5,8 +5,13 @@ import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 
 class CodeParser {
-  static String getFunctionSignature(Element element) {
-    var content = getClassCode(element);
+  static String getFunctionSignature(Element element, {String c}) {
+    var content;
+    if (c != null) {
+      content = c;
+    } else {
+      content = getClassCode(element);
+    }
     var splitted = content.split("${element.name}(");
     if (splitted.length < 2) return element.name;
     splitted = splitted[1].split(")");
@@ -75,14 +80,15 @@ class CodeParser {
     functions.forEach((function) {
       //TODO find a way to check function builders
       if (function.metadata.any((m) =>
-          m.element.toString().split(" ")[0] == SimiloBase.COPYWITHCLASS)) {
+          m.computeConstantValue().type.toString() ==
+          SimiloBase.COPYWITHCLASS)) {
         bodies.add(
             CopyWithGen().generateForAnnotatedElement(element, null, null));
-      } else if (function.metadata.any(
-          (m) => m.element.toString().split(" ")[0] == SimiloBase.SCALECLASS)) {
+      } else if (function.metadata.any((m) =>
+          m.computeConstantValue().type.toString() == SimiloBase.SCALECLASS)) {
         bodies.add(ScaleGen().generateForAnnotatedElement(element, null, null));
       } else {
-        var f = function.toString();
+        var f = getFunctionSignature(function, c: contents);
         var splitted = contents.split(f);
         if (splitted.length <= 1 || splitted[1].trim()[0] != "{") {
           throw InvalidGenerationSourceError(
