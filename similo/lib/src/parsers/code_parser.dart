@@ -1,22 +1,22 @@
 import 'package:similo/src/copy_with_generator.dart';
+import 'package:similo/src/scale_generator.dart';
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 
 class CodeParser {
-
-  static String getFunctionSignature(Element element){
+  static String getFunctionSignature(Element element) {
     var content = getClassCode(element);
     var splitted = content.split("${element.name}(");
-    if(splitted.length<2) return element.name;
+    if (splitted.length < 2) return element.name;
     splitted = splitted[1].split(")");
-    if(splitted.length<2) return element.name;
+    if (splitted.length < 2) return element.name;
 
     var functionDefine = element.toString().split("(")[0];
     var variables = splitted[0];
     return "$functionDefine($variables)";
   }
-  
+
   static String getFirstLevel(ClassElement element) {
     var content = getClassCode(element);
     if (content.indexOf("{") < 0 || content.lastIndexOf("}") < 0)
@@ -73,11 +73,14 @@ class CodeParser {
     var functions = element.methods;
     var bodies = List<String>();
     functions.forEach((function) {
-      //TODO check for other function builders
+      //TODO find a way to check function builders
       if (function.metadata.any((m) =>
           m.element.toString().split(" ")[0] == SimiloBase.COPYWITHCLASS)) {
         bodies.add(
             CopyWithGen().generateForAnnotatedElement(element, null, null));
+      } else if (function.metadata.any(
+          (m) => m.element.toString().split(" ")[0] == SimiloBase.SCALECLASS)) {
+        bodies.add(ScaleGen().generateForAnnotatedElement(element, null, null));
       } else {
         var f = function.toString();
         var splitted = contents.split(f);
@@ -97,15 +100,15 @@ class CodeParser {
   static String getClassCode(Element e) {
     //var contents = await buildStep.readAsString(buildStep.inputId);
     ClassElement element;
-    if(e is ClassElement){
+    if (e is ClassElement) {
       element = e;
-    }else if(e.enclosingElement is ClassElement) {
+    } else if (e.enclosingElement is ClassElement) {
       element = e.enclosingElement;
-    }else{
+    } else {
       throw InvalidGenerationSourceError(
-              'Generator cannot target `${e.name}` since its unable to reach parent class.',
-              todo: 'Check parent class',
-              element: element);
+          'Generator cannot target `${e.name}` since its unable to reach parent class.',
+          todo: 'Check parent class',
+          element: element);
     }
     var contents =
         element.source.contents.data; //Using this might cause problems

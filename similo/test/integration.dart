@@ -1,6 +1,8 @@
 import 'package:similo_annotations/annotations.dart';
 import 'package:source_gen_test/annotations.dart';
 
+import 'src/mocks/screen_utils.dart';
+
 @ShouldGenerate(r'''
 class _$Test implements Test {
   final TestValues _values;
@@ -151,8 +153,7 @@ abstract class TestSomeDefault {
   const factory TestSomeDefault(TestSomeDefaultValues b) = _$TestSomeDefault;
 }
 
-@ShouldGenerate(r'''
-class GivenClass implements TestGivenNameValues {
+@ShouldGenerate(r'''class GivenClass implements TestGivenNameValues {
   final GivenValues _values;
 
   const GivenClass(GivenValues v) : this._values = v;
@@ -163,27 +164,42 @@ class GivenClass implements TestGivenNameValues {
   TestGivenNameValues copyWith(GivenValues v) {
     return GivenClass(GivenValues(
       value: v.value != null ? v.value : this._values.value,
+      nonScallableValue: v.nonScallableValue != null
+          ? v.nonScallableValue
+          : this._values.nonScallableValue,
+    ));
+  }
+
+  TestGivenNameValues scale(ScreenUtils screenUtils) {
+    return copyWith(GivenValues(
+      value: screenUtil.setHeight(value),
     ));
   }
 
   //Getters
   get value => _values.value;
+  get nonScallableValue => _values.nonScallableValue;
 }
 
 //Values
 class GivenValues {
   //Define variables with types
-  final int value;
+  final double value;
+  final double nonScallableValue;
 
   //Write const constructor
   const GivenValues({
     this.value,
+    this.nonScallableValue,
   });
 }
 ''')
 @ConstNamed(className: "GivenClass", valuesName: "GivenValues")
 abstract class TestGivenNameValues {
-  final int value;
+  @ScallableWith(Height)
+  final double value;
+  @NonScallable
+  final double nonScallableValue;
 
   String testFunction(String v) {
     return value.toString() + v;
@@ -191,6 +207,9 @@ abstract class TestGivenNameValues {
 
   @CopyWith
   TestGivenNameValues copyWith(GivenValues v);
+
+  @Scale
+  TestGivenNameValues scale(ScreenUtils screenUtils);
 
   const factory TestGivenNameValues(GivenValues b) = GivenClass;
 }

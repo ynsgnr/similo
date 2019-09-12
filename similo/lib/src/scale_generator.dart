@@ -1,4 +1,5 @@
 import 'package:similo/src/custom_modifier_generator.dart';
+import 'package:similo_annotations/annotations.dart';
 
 class ScaleGen extends CustomModifier {
   ScaleGen():super({
@@ -11,5 +12,5 @@ class ScaleGen extends CustomModifier {
         top: screenUtil.setHeight($variableName.top),
         bottom: screenUtil.setHeight($variableName.bottom),
       )""",
-  });
+  },annotationName:SimiloBase.SCALECLASS);
 }

@@ -8,13 +8,15 @@ import 'package:source_gen/source_gen.dart';
 
 class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
   final Map<String, String Function(String)> modifiers;
+  final String annotationName;
 
-  const CustomModifier(this.modifiers);
+  const CustomModifier(this.modifiers,
+      {this.annotationName = SimiloBase.CUSTOMCLASS});
 
   @override
   generateForAnnotatedElement(
       Element e, ConstantReader annotation, BuildStep buildStep) {
-    var elements = ClassParser.getFunctionAndClass(e, SimiloBase.CUSTOMCLASS);
+    var elements = ClassParser.getFunctionAndClass(e, annotationName);
     var element = elements[0];
     var classElement = elements[1] as ClassElement;
     if (element == null || classElement == null) return "";
@@ -38,15 +40,19 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
       var m = metadata.firstWhere(
           (m) =>
               m.computeConstantValue().getField(SimiloBase.MODIFIERONCUSTOM) !=
-              null, orElse: () {});
-      if(m!=null){
-        var modifier = m.computeConstantValue().getField(SimiloBase.MODIFIERONCUSTOM).toStringValue();
-        if(modifier.isNotEmpty){
+              null,
+          orElse: () {});
+      if (m != null) {
+        var modifier = m
+            .computeConstantValue()
+            .getField(SimiloBase.MODIFIERONCUSTOM)
+            .toStringValue();
+        if (modifier.isNotEmpty) {
           final variableName = v[1];
-          allModifiers.add("$variableName: ${modifier.replaceAll("\$variableName", variableName)},");
+          allModifiers.add(
+              "$variableName: ${modifier.replaceAll("\$variableName", variableName)},");
         }
-      }
-      else if (modifiers.containsKey(v[0])) {
+      } else if (modifiers.containsKey(v[0])) {
         final variableName = v[1];
         final customSet = modifiers[v[0]](variableName);
         allModifiers.add("$variableName: $customSet,");
