@@ -34,6 +34,7 @@ class CustomModifier extends GeneratorForAnnotation<SimiloBase> {
     List<String> allModifiers = List<String>();
     variables
         .forEach((v) {
+          //TODO add check for CustomVariable annotation check
           if(modifiers.containsKey(v[0])){
             final variableName = v[1];
             final customSet = modifiers[v[0]](variableName);

@@ -1,5 +1,4 @@
 import 'package:similo_annotations/src/annotations.dart';
-import 'package:similo_annotations/src/similo_base.dart';
 
 const Const = ConstAnnotation();
 const CopyWith = CopyWithAnnotation();

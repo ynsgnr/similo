@@ -19,8 +19,7 @@ class ClassDefiner extends GeneratorForAnnotation<SimiloBase> {
     final String valuesName = annotation.peek(ConstNamed.VALUESNAME) != null
         ? annotation.peek(ConstNamed.VALUESNAME).stringValue
         : "${e.name}Values";
-
-    //TODO add exclusive and custom builder annotations
+        
     //TODO test scale generator and scalableWith() annoatation
     //TODO add build checks with warnings
     //TODO add asserts tag for constructor such as @assert("example!=null");

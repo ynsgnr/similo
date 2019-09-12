@@ -1,7 +1,7 @@
 import 'package:similo/src/custom_modifier_generator.dart';
 
 class ScaleGen extends CustomModifier {
-  const ScaleGen():super({
+  ScaleGen():super({
     "TextStyle": (String variableName)=>"""$variableName.copyWith(
         fontSize: screenUtil.setSp(this.$variableName.fontSize),
       )""",

@@ -22,6 +22,11 @@ class ScaleAnnotation extends SimiloCustom {
   const ScaleAnnotation();
 }
 
-class NonScallableAnnotation extends SimiloVariableBase {
+class NonScallableAnnotation extends CustomVariable {
   const NonScallableAnnotation();
+
+  @override
+  String getModifier(String variableName) {
+    return null;
+  }
 }
