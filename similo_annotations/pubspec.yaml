@@ -1,8 +1,8 @@
 name: similo_annotations
 description: Annotations package for similo
-version: 1.0.0
+version: 1.0.1
 author: Yunus Gungor <yunusgnr@gmail.com>
-homepage: https://github.com/ynsngr/similo
+homepage: https://github.com/ynsgnr/similo
 
 environment:  
   sdk: ">=2.0.0 <3.0.0"
