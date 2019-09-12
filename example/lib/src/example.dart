@@ -1,6 +1,6 @@
 
 import 'package:example/src/screen_utils.dart';
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 
 part 'example.g.dart';
 

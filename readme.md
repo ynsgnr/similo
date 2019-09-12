@@ -15,7 +15,7 @@ Similo means copy or simulate in latin (according to google translate at least).
 
     Add 
     ```
-    similo_annotations: 1.0.0
+    similo_annotations: ^1.0.2
     ```
     under  your `dependencies` in `pubspec.yaml`.
 
@@ -23,7 +23,7 @@ Similo means copy or simulate in latin (according to google translate at least).
 
     Add 
     ```
-    similo: 1.0.0
+    similo: ^1.0.2
     ```
     under  your `dev_dependencies` in `pubspec.yaml`.
 
@@ -52,9 +52,11 @@ Given a class, generator creates two more classes. One class for all the functio
 
 Add to begining of your file:
 ```dart
+import 'package:similo_annotations/similo_annotations.dart';
+
 part 'your_file_name.g.dart';
 ```
-so generated file and your file can work as one.
+so we can use annotations and generated file and your file can work as one.
 
 Add annotations for your classes and make them abstract:
 ```dart

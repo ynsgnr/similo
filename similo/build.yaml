@@ -7,7 +7,7 @@ targets:
 builders:
   similo:
     target: ":similo"
-    import: "package:similo/builder.dart"
+    import: "package:similo/similo.dart"
     builder_factories: ["similoFactory"]
     build_extensions: {".dart": [".similo.g.part"]}
     auto_apply: dependents

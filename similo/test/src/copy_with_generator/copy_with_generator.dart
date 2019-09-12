@@ -1,4 +1,4 @@
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 import 'package:source_gen_test/annotations.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 

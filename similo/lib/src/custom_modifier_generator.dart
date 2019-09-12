@@ -3,7 +3,7 @@ import 'package:build/src/builder/build_step.dart';
 import 'package:similo/src/parsers/class_parser.dart';
 import 'package:similo/src/parsers/code_parser.dart';
 import 'package:similo/src/parsers/variable_parser.dart';
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 class CustomModifier extends GeneratorForAnnotation<SimiloBase> {

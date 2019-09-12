@@ -1,6 +1,6 @@
 import 'package:similo/src/copy_with_generator.dart';
 import 'package:similo/src/scale_generator.dart';
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 

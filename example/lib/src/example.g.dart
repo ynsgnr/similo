@@ -10,11 +10,11 @@ class _$Example implements Example {
   final ExampleValues _values;
 
   const _$Example(ExampleValues v) : this._values = v;
-  testFunction(String toAdd) {
+  String testFunction(String toAdd) {
     return exampleWithDefault + toAdd;
   }
 
-  testHiddenFunction(String toAdd) {
+  String testHiddenFunction(String toAdd) {
     return _hiddenValue + toAdd;
   }
 
@@ -33,7 +33,7 @@ class _$Example implements Example {
     ));
   }
 
-  scaleFun(ScreenUtils screenUtils) {
+  Example scaleFun(ScreenUtils screenUtils) {
     return copyObject(ExampleValues(
       scaleThis: screenUtils.setWidth(scaleThis),
     ));

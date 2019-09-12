@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:similo/src/class_generator.dart';
 import 'package:similo/src/copy_with_generator.dart';
 import 'package:similo/src/custom_modifier_generator.dart';
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 import 'package:source_gen_test/src/build_log_tracking.dart';
 import 'package:source_gen_test/src/init_library_reader.dart';
 import 'package:source_gen_test/src/test_annotated_classes.dart';

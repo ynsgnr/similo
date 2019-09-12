@@ -4,11 +4,9 @@ description: >-
   An example for similo.
 author: Yunus Gungor <yunusgnr@gmail.com>
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.2.2 <3.0.0'
 dependencies:
-  similo_annotations:    
-    path: ../similo_annotations/
+  similo_annotations: ^1.0.2
 dev_dependencies:
-  similo:    
-    path: ../similo/
+  similo: ^1.0.2
   build_runner: ^1.0.0

@@ -1,5 +1,5 @@
 import 'package:similo/src/custom_modifier_generator.dart';
-import 'package:similo_annotations/annotations.dart';
+import 'package:similo_annotations/similo_annotations.dart';
 
 class ScaleGen extends CustomModifier {
   ScaleGen():super({
