@@ -33,9 +33,9 @@ class _$Example implements Example {
     ));
   }
 
-  Example scaleFun(ScreenUtils screenUtils) {
+  Example scaleFun(ScreenUtil screenUtil) {
     return copyObject(ExampleValues(
-      scaleThis: screenUtils.setWidth(scaleThis),
+      scaleThis: screenUtil.setWidth(scaleThis),
     ));
   }
 

@@ -1,5 +1,5 @@
 
-import 'package:example/src/screen_utils.dart';
+import 'package:example/src/screen_util.dart';
 import 'package:similo_annotations/similo_annotations.dart';
 
 part 'example.g.dart';
@@ -30,7 +30,7 @@ abstract class Example{
   Example copyObject(ExampleValues v);
 
   @Scale
-  Example scaleFun(ScreenUtils screenUtils);
+  Example scaleFun(ScreenUtil screenUtil);
   
   const factory Example(ExampleValues v) = _$Example;
 }

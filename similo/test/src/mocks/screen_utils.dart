@@ -1,4 +1,4 @@
-class ScreenUtils{
+class ScreenUtil{
   final int width = 1080;
   final int height = 1920;
 

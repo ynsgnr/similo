@@ -170,9 +170,9 @@ abstract class TestSomeDefault {
     ));
   }
 
-  TestGivenNameValues scale(ScreenUtils screenUtils) {
+  TestGivenNameValues scale(ScreenUtil screenUtil) {
     return copyWith(GivenValues(
-      value: screenUtils.setHeight(value),
+      value: screenUtil.setHeight(value),
     ));
   }
 
@@ -209,7 +209,7 @@ abstract class TestGivenNameValues {
   TestGivenNameValues copyWith(GivenValues v);
 
   @Scale
-  TestGivenNameValues scale(ScreenUtils screenUtils);
+  TestGivenNameValues scale(ScreenUtil screenUtil);
 
   const factory TestGivenNameValues(GivenValues b) = GivenClass;
 }

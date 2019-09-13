@@ -15,7 +15,7 @@ Similo means copy or simulate in latin (according to google translate at least).
 
     Add 
     ```
-    similo_annotations: ^1.0.2
+    similo_annotations: ^1.0.3
     ```
     under  your `dependencies` in `pubspec.yaml`.
 
@@ -23,7 +23,7 @@ Similo means copy or simulate in latin (according to google translate at least).
 
     Add 
     ```
-    similo: ^1.0.2
+    similo: ^1.0.3
     ```
     under  your `dev_dependencies` in `pubspec.yaml`.
 
@@ -118,8 +118,8 @@ abstract class Example{
   //This functions needs to get Value class
 
   @Scale
-  Example yourScaleFunctionName(ScreenUtils screenUtils);
-  //This functions needs to get screenUtils class
+  Example yourScaleFunctionName(ScreenUtil screenUtil);
+  //This functions needs to get screenUtil class
 
   const factory Example(ExampleValues v) = _$Example;
 }

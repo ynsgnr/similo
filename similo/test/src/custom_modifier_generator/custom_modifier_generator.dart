@@ -256,7 +256,7 @@ abstract class TestCustomGenExclusiveAnnotation {
 
 @ShouldGenerate(r'''TestCustomGenCustomAnnotation customTest() {
   return copyWith(TestCustomGenCustomAnnotationValues(
-    value: screenUtils.setWidth(value),
+    value: screenUtil.setWidth(value),
   ));
 }
 ''')
